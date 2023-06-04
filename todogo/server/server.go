@@ -24,7 +24,9 @@ func NewApiServer(listenAddr string, backend backend.Backender) *ApiServer {
 func (s *ApiServer) Run() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/user", makeHttpHandleFunc(s.HandleUser))
+	router.HandleFunc("/api/user", makeHttpHandleFunc(s.HandleUser))
+	router.HandleFunc("/api/user/login", makeHttpHandleFunc(s.HandleLoginUser))
+	router.HandleFunc("/api/user/{username}", AuthWithJWT(makeHttpHandleFunc(s.HandleGetUserByUserName), s.backend))
 
 	log.Println("TodoApp server is running now on port: ", s.listenAddr)
 
