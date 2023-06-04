@@ -41,3 +41,15 @@ func NewUser(username string, password string) (*User, error) {
 		Password: string(cryptoPassword[:]),
 	}, nil
 }
+
+type TodoItem struct {
+	Uuid       string `json:"uuid"`
+	UserUuid   string `json:"user_uuid"`
+	Title      string `json:"title"`
+	Detail     string `json:"detail"`
+	LastAt     int    `json:"last_at"`
+	IsChecked  bool   `json:"is_checked"`
+	Category   string `json:"category"`
+	Priority   int    `json:"priority"`
+	AssignedAt int    `json:"assigned_at"`
+}
