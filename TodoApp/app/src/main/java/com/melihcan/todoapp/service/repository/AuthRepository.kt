@@ -1,36 +1,39 @@
 package com.melihcan.todoapp.service.repository
 
 import android.content.Context
+import android.util.Log
+import com.melihcan.todoapp.di.RetrofitClient
 import com.melihcan.todoapp.model.ErrorModel
+import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
 import com.melihcan.todoapp.service.ServiceInstance
 import com.melihcan.todoapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.withContext
-import java.lang.Error
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
-open class AuthRepository @Inject constructor(
-    private val serviceInstance: ServiceInstance,
-    context: Context
-) {
-    private val loginChannelData = Channel<Resource<LoginResponseModel, ErrorModel>> {  }
-    val loginFlowData: Flow<Resource<LoginResponseModel, ErrorModel>> = loginChannelData.receiveAsFlow()
+class AuthRepository @Inject constructor(private val serviceInstance: ServiceInstance) {
 
     suspend fun loginUser(
-        username: String,
-        password: String
+        user: LoginRequestModel,
+        onSuccess: (String) -> Unit,
+        onFailure: () -> Unit
     ) {
-        withContext(Dispatchers.IO) {
-            val res = serviceInstance.loginUser(username, password)
-            if (res.isSuccessful && res.body() != null) {
-                loginChannelData.send(Resource.Data(res.body()!!))
+        try {
+            val response = serviceInstance.loginUser(user)
+            if (response.isSuccessful) {
+                val res = response.body()
+                res?.let { onSuccess(it.token) }
             } else {
-                loginChannelData.send(Resource.Error(ErrorModel(res.message())))
+                println("Login failed " + response.message())
+                onFailure()
             }
+        } catch (e: Exception) {
+            println("Login request failed")
+            onFailure()
         }
     }
 }

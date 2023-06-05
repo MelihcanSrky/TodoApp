@@ -14,7 +14,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object RetrofitClient {
+
+    private const val BASE_URL = "http://192.168.1.37:5000/api/"
 
     @Singleton
     @Provides
@@ -34,8 +36,4 @@ class AppModule {
     @Singleton
     @Provides
     fun provideContext(application: Application): Context = application.applicationContext
-
-    companion object {
-        const val BASE_URL = "http://localhost:5000/api/"
-    }
 }
