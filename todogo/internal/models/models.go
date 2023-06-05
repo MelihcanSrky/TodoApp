@@ -42,6 +42,16 @@ func NewUser(username string, password string) (*User, error) {
 	}, nil
 }
 
+type CreateTodo struct {
+	Useruuid   string `json:"user_uuid"`
+	Title      string `json:"title"`
+	Detail     string `json:"detail"`
+	LastAt     int    `json:"last_at"`
+	Category   string `json:"category"`
+	Priority   int    `json:"priority"`
+	AssignedAt int    `json:"assigned_at"`
+}
+
 type TodoItem struct {
 	Uuid       string `json:"uuid"`
 	UserUuid   string `json:"user_uuid"`
@@ -52,4 +62,19 @@ type TodoItem struct {
 	Category   string `json:"category"`
 	Priority   int    `json:"priority"`
 	AssignedAt int    `json:"assigned_at"`
+}
+
+func NewTodo(todo *CreateTodo) (*TodoItem, error) {
+	uuid := uuid.NewString()
+	return &TodoItem{
+		Uuid:       uuid,
+		UserUuid:   todo.Useruuid,
+		Title:      todo.Title,
+		Detail:     todo.Detail,
+		LastAt:     todo.LastAt,
+		IsChecked:  false,
+		Category:   todo.Category,
+		Priority:   todo.Priority,
+		AssignedAt: todo.AssignedAt,
+	}, nil
 }
