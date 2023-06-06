@@ -36,4 +36,24 @@ class AuthRepository @Inject constructor(private val serviceInstance: ServiceIns
             onFailure()
         }
     }
+
+    suspend fun registerUser(
+        user: LoginRequestModel,
+        onSuccess: (String) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        try {
+            val response = serviceInstance.registerUser(user)
+            if (response.isSuccessful) {
+                val res = response.body()
+                res?.let { onSuccess(it.uuid) }
+            } else {
+                println("Register failed " + response.message())
+                onFailure()
+            }
+        } catch (e: Exception) {
+            println("Register request failed")
+            onFailure()
+        }
+    }
 }
