@@ -5,7 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.melihcan.todoapp.presentation.features.auth.LoginPage
-import com.melihcan.todoapp.store.LoginPageStore
+import com.melihcan.todoapp.presentation.features.auth.LoginViewModel
+import com.melihcan.todoapp.presentation.features.main.HomePage
 
 @Composable
 fun Navigator() {
@@ -13,6 +14,10 @@ fun Navigator() {
     NavHost(navController = navController, startDestination = Screen.Login.route) {
         composable(Screen.Login.route) {
             LoginPage(navController = navController)
+        }
+
+        composable(Screen.Home.route) {
+            HomePage(navController = navController)
         }
     }
 }

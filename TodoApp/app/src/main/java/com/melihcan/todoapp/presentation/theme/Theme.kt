@@ -27,6 +27,7 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF131416),
     onSurface = Color(0xFF1C1B1F),
+    error = Color(0xffCD5037)
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -62,7 +63,7 @@ fun TodoAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = TodoTypo,
         content = content
     )
 }
