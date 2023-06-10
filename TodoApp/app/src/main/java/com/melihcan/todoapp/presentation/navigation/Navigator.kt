@@ -12,7 +12,7 @@ import com.melihcan.todoapp.presentation.features.main.HomePage
 @Composable
 fun Navigator() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Register.route) {
+    NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(Screen.Login.route) {
             LoginPage(navController = navController)
         }

@@ -145,7 +145,7 @@ fun RegisterPage(
                         .width(18.dp),
                     color = MaterialTheme.colorScheme.surface
                 )
-                else Text(text = "Login", style = TodoTypo.bodyMedium)
+                else Text(text = "Sign Up", style = TodoTypo.bodyMedium)
             }
         }
     }

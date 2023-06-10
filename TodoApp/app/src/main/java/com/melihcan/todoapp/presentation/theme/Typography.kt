@@ -27,10 +27,22 @@ val TodoTypo = Typography(
         lineHeight = 32.sp,
         letterSpacing = (-0.02).sp
     ),
+    titleMedium = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        lineHeight = 32.sp,
+    ),
     bodyMedium = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 20.sp,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+        lineHeight = 16.sp,
     )
 )
