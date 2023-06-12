@@ -23,7 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.melihcan.todoapp.extensions.CurrentDate
+import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
+import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
+import com.melihcan.todoapp.extensions.getFirstDayOfWeek
 import com.melihcan.todoapp.model.WeekModel
 import com.melihcan.todoapp.model.week
 import com.melihcan.todoapp.presentation.theme.TodoTypo
@@ -33,18 +35,19 @@ import com.melihcan.todoapp.presentation.theme.TodoTypo
 fun HomePage(
     navController: NavController
 ) {
-    val (date, dayName) = CurrentDate()
-    val currentDay = week.indexOf(dayName)
-    val currentDate = date.take(2).toInt()
-    val firstDayOfWeek = currentDate - currentDay
+    val currentDay = getCurrentDayOfWeek()
+    val currentWeek = getCurrentWeekOfYear()
+    val firstDayOfWeek = getFirstDayOfWeek(currentWeek)
+    println(currentDay.toString() + " " + currentWeek.toString() + " " + firstDayOfWeek.toString())
     var weekDays = mutableListOf<WeekModel>()
     for (i in 0..6) {
-        weekDays.add(WeekModel(firstDayOfWeek + i, week[i]))
+        weekDays.add(WeekModel( i + firstDayOfWeek, week[i]))
     }
     var selectedIndex by remember { mutableStateOf(currentDay) }
     Scaffold(
         topBar = {
-            Column() {
+            Column(
+            ) {
                 TopAppBar(
                     colors = TopAppBarDefaults.smallTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.background,

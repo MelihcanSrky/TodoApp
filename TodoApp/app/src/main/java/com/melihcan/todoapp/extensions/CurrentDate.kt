@@ -6,18 +6,32 @@ import android.os.Build
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 
-data class PairDate(val date: String, val dayName: String)
-
-@SuppressLint("NewApi")
-fun CurrentDate() : PairDate {
+fun getCurrentWeekOfYear(): Int {
     val cal = Calendar.getInstance()
-    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-    val dayDate = SimpleDateFormat("EEEE")
-    val dayName = dayDate.format(cal.time)
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        PairDate(date = LocalDate.now().format(formatter), dayName = dayName)
+    return cal.get(Calendar.WEEK_OF_YEAR)
+}
+
+fun getCurrentDayOfWeek(): Int {
+    val cal = Calendar.getInstance()
+    cal.firstDayOfWeek = Calendar.MONDAY
+    var day = cal.get(Calendar.DAY_OF_WEEK)
+    if (day == Calendar.SUNDAY) {
+        day = 6
     } else {
-        TODO("VERSION.SDK_INT < O")
+        day -= 2
     }
+    return day
+}
+
+
+fun getFirstDayOfWeek(week: Int): Int {
+    val calendar = Calendar.getInstance()
+    calendar.firstDayOfWeek = Calendar.MONDAY
+    calendar.set(Calendar.WEEK_OF_YEAR, week + 1)
+    calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+
+    val dateFormat = SimpleDateFormat("dd", Locale.getDefault())
+    return dateFormat.format(calendar.time).toInt()
 }

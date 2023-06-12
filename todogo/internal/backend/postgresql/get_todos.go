@@ -30,10 +30,11 @@ func scanTodos(rows *sql.Rows) (*models.TodoItem, error) {
 		&todo.UserUuid,
 		&todo.Title,
 		&todo.Detail,
-		&todo.LastAt,
 		&todo.IsChecked,
 		&todo.Category,
 		&todo.Priority,
+		&todo.WeekOfYear,
+		&todo.DayOfYear,
 		&todo.AssignedAt,
 	)
 	return todo, err
