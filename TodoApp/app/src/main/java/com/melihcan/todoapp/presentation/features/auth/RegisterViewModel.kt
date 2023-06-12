@@ -8,7 +8,7 @@ import com.melihcan.todoapp.presentation.core.BaseViewModel
 import com.melihcan.todoapp.presentation.core.ViewAction
 import com.melihcan.todoapp.presentation.core.ViewEffect
 import com.melihcan.todoapp.presentation.core.ViewState
-import com.melihcan.todoapp.presentation.features.auth.shared.IsSuccess
+import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.service.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

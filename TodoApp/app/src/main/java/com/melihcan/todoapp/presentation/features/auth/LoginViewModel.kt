@@ -1,21 +1,21 @@
 package com.melihcan.todoapp.presentation.features.auth
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.melihcan.todoapp.extensions.isPasswordValid
 import com.melihcan.todoapp.extensions.isUsernameValid
+import com.melihcan.todoapp.model.GetUserModel
 import com.melihcan.todoapp.model.LoginRequestModel
+import com.melihcan.todoapp.model.LoginResponseModel
 import com.melihcan.todoapp.presentation.core.BaseViewModel
 import com.melihcan.todoapp.presentation.core.ViewAction
 import com.melihcan.todoapp.presentation.core.ViewEffect
 import com.melihcan.todoapp.presentation.core.ViewState
-import com.melihcan.todoapp.presentation.features.auth.shared.IsSuccess
+import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.service.repository.AuthRepository
+import com.melihcan.todoapp.storage.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +29,8 @@ sealed class LoginAction : ViewAction {
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val context: Context
 ) : BaseViewModel<LoginViewModel.State, LoginAction, LoginViewModel.Effect>(
     initialState = State(
         username = "",
@@ -73,11 +74,12 @@ class LoginViewModel @Inject constructor(
                         commit(
                             state.value.copy(
                                 token = token,
-                                isSuccess = IsSuccess.SUCCESS,
-                                isButtonEnabled = true
                             )
                         )
+                        SharedPrefManager.getInstance(context).saveToken(LoginResponseModel(token))
+                        getUserByUsername()
                     }, onFailure = {
+                        println("Is Failure loginUser")
                         commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.ERROR,
@@ -86,6 +88,45 @@ class LoginViewModel @Inject constructor(
                         )
                     })
             } catch (e: Exception) {
+                println("Is Failure loginUser Exception")
+                commit(state.value.copy(isSuccess = IsSuccess.ERROR, isButtonEnabled = true))
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun getUserByUsername() {
+        viewModelScope.launch {
+            try {
+                commit(state.value.copy(isSuccess = IsSuccess.LOADING, isButtonEnabled = false))
+                authRepository.getUserByUsername(
+                    state.value.username,
+                    token = state.value.token!!,
+                    onSuccess = { user ->
+                        println("Is Success getUser")
+                        commit(
+                            state.value.copy(
+                                isSuccess = IsSuccess.SUCCESS,
+                                isButtonEnabled = true
+                            )
+                        )
+                        SharedPrefManager.getInstance(context).saveUser(GetUserModel(
+                            username = user.username,
+                            uuid = user.uuid
+                        ))
+                    },
+                    onFailure = {
+                        println("Is Failure getUser")
+                        commit(
+                            state.value.copy(
+                                isSuccess = IsSuccess.ERROR,
+                                isButtonEnabled = true
+                            )
+                        )
+                    }
+                )
+            } catch (e: Exception) {
+                println("Is Failure getUsert exception")
                 commit(state.value.copy(isSuccess = IsSuccess.ERROR, isButtonEnabled = true))
                 e.printStackTrace()
             }

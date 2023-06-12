@@ -30,7 +30,7 @@ import androidx.navigation.NavController
 import com.melihcan.todoapp.extensions.isPasswordValid
 import com.melihcan.todoapp.extensions.isUsernameValid
 import com.melihcan.todoapp.presentation.features.auth.components.TodoTextField
-import com.melihcan.todoapp.presentation.features.auth.shared.IsSuccess
+import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.MCSRadiusMedium
 import com.melihcan.todoapp.presentation.theme.TodoTypo

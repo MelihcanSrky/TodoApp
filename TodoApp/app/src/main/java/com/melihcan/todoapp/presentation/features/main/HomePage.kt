@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,20 +24,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,12 +38,11 @@ import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.extensions.getFirstDayOfWeek
 import com.melihcan.todoapp.model.TodosModel
-import com.melihcan.todoapp.model.WeekModel
 import com.melihcan.todoapp.model.week
-import com.melihcan.todoapp.presentation.features.auth.shared.IsSuccess
+import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
+import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.TodoTypo
-import com.melihcan.todoapp.service.repository.TodosRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,11 +56,21 @@ fun HomePage(
     val currentWeek = getCurrentWeekOfYear()
     val firstDayOfWeek = getFirstDayOfWeek(currentWeek)
     val currentMonth = getCurrentMonth()
+
+    LaunchedEffect(state) {
+        if (state.isLogin == false) {
+            navController.navigate(Screen.Register.route) {
+                popUpTo(Screen.Register.route)
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TabBar(
                 currentDay,
-                firstDayOfWeek
+                firstDayOfWeek,
+                viewModel
             )
         }
     ) { padding ->
@@ -94,7 +94,18 @@ fun HomePage(
                     CircularProgressIndicator()
                 }
             } else {
-
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Add Now!",
+                        style = TodoTypo.headlineLarge,
+                        color = MaterialTheme.colorScheme.surface
+                    )
+                }
             }
         }
     }

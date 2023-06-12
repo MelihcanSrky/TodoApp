@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.melihcan.todoapp.presentation.navigation.Navigator
 import com.melihcan.todoapp.presentation.theme.TodoAppTheme
+import com.melihcan.todoapp.storage.SharedPrefManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigator()
+                    Navigator(this)
                 }
             }
         }

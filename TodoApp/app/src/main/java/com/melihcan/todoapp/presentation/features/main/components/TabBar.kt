@@ -1,7 +1,14 @@
 package com.melihcan.todoapp.presentation.features.main.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -14,17 +21,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import com.melihcan.todoapp.model.WeekModel
 import com.melihcan.todoapp.model.week
+import com.melihcan.todoapp.presentation.features.main.HomePageAction
+import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBar(
     currentDay: Int,
-    firstDayOfWeek: Int
+    firstDayOfWeek: Int,
+    viewModel: HomePageViewModel
 ) {
     var weekDays = mutableListOf<WeekModel>()
     for (i in 0..6) {
@@ -41,7 +52,22 @@ fun TabBar(
                 titleContentColor = MaterialTheme.colorScheme.surface
             ),
             title = {
-                Text(text = "Good Morning", style = TodoTypo.headlineSmall)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Good Morning", style = TodoTypo.headlineSmall)
+                    IconButton(onClick = {
+                        val isLogOut = viewModel.dispatch(HomePageAction.Logout)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Logout",
+                            tint = Color.White
+                        )
+                    }
+                }
             }
         )
         TabRow(
