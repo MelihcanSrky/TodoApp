@@ -35,3 +35,9 @@ fun getFirstDayOfWeek(week: Int): Int {
     val dateFormat = SimpleDateFormat("dd", Locale.getDefault())
     return dateFormat.format(calendar.time).toInt()
 }
+
+fun getCurrentMonth(): String {
+    val cal = Calendar.getInstance()
+    val format = SimpleDateFormat("MMM")
+    return format.format(cal.get(Calendar.MONTH + 1))
+}
