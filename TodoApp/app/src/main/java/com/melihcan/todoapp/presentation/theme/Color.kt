@@ -1,4 +1,4 @@
-package com.melihcan.todoapp.ui.theme
+package com.melihcan.todoapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

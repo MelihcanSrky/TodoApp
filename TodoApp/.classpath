@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/javac/debug/classes"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/javac/debugAndroidTest/classes"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/javac/release/classes"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debugAndroidTest/R.jar"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/release/R.jar"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/intermediates/compile_app_classes_jar/debug/classes.jar"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/tmp/kapt3/classes/debug"/>
+	<classpathentry kind="lib" path="C:/FullStack/todoapp/TodoApp/app/build/tmp/kotlin-classes/debug"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.5.0/857678d6b4ca7b28571ef7935c668bdb57e15027/annotation-1.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.2.0/5e1b8b81dfd5f52c56a8d53b18ca759c19a301f3/core-common-2.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.1.0/1f27220b47669781457de0d600849a5de0e89909/collection-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.concurrent/concurrent-futures/1.1.0/50b7fb98350d5f42a4e49704b03278542293ba48/concurrent-futures-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common-java8/2.6.1/2ad14aed781c4a73ed4dbb421966d408a0a06686/lifecycle-common-java8-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.6.1/10f354fdb64868baecd67128560c5a0d6312c495/lifecycle-common-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.46.1/8554769ea04410d4cbbd0e5f92ce5fd4e7b7f61/dagger-2.46.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-core/2.46.1/848183d99f6abf4fc7f29a97dbafc21d46a8ed27/hilt-core-2.46.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/1.0/c949a840a6acbc5268d088e47b04177bf90b3cad/listenablefuture-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/4.9.0/f9ce50fc73074fc4e7bde6e177e8bb4792045e/logging-interceptor-4.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.9.0/8e17601d3bdc8cf57902c154de021931d2c27c1/okhttp-4.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/2.8.0/49b64e09d81c0cc84b267edd0c2fd7df5a64c78c/okio-jvm-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.9.0/fc93484fc67ab52b1e0ccbdaa3922d8a6678e097/converter-gson-2.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.9.0/d8fdfbd5da952141a665a403348b74538efc05ff/retrofit-2.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.2/8ac9e16d933b6fb43bc7f576336b8f4d7eb5ba12/junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.8.10/a61b182458550492c12aee66157d7b524a63a5ec/kotlin-stdlib-common-1.8.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.8.0/3c91271347f678c239607abb676d4032a7898427/kotlin-stdlib-jdk7-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.8.0/ed04f49e186a116753ad70d34f0ac2925d1d8020/kotlin-stdlib-jdk8-1.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.8.10/6d5560a229477df9406943d5feda5618e98eb64c/kotlin-stdlib-1.8.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-android/1.6.4/f955fc8b2ad196e2f4429598440e15f7492eeb2b/kotlinx-coroutines-android-1.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.6.4/2c997cd1c0ef33f3e751d3831929aeff1390cb30/kotlinx-coroutines-core-jvm-1.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-test-jvm/1.6.4/27cee4a22d4149a86095bb1b4f4c5f10fbd3be97/kotlinx-coroutines-test-jvm-1.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/015124f379cc15b303b1580d15d6dccb/transformed/activity-ktx-1.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/028d9af4b32cc1c7d474c510b567d8ee/transformed/monitor-1.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/0411f2a762f681a5815def12a7921683/transformed/storage-1.4.2-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/08c2d47582e31089703964fb989b7317/transformed/lifecycle-viewmodel-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/0bee146c9a401f7011b14005c450e0ac/transformed/foundation-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/0c3271f6a4ab0eb9e8fea7879daee319/transformed/ui-tooling-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/0dfcb05926961fa1c0c33d61ff7da3e7/transformed/lifecycle-livedata-core-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/12164c3ddd7d64a2f5ccece68a67c538/transformed/foundation-layout-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/181ebba8ae5bb3e04aec9485e7256abb/transformed/activity-1.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/19ec367ff5f55623bacf9e3cfba1a756/transformed/fragment-1.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/1dbe87c1bc64df8f6990c545333afdde/transformed/annotation-1.0.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/2344768e27ef8179f13f52dbd18d5a5b/transformed/navigation-compose-2.5.3-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/25cb2b0e3bae4a92d30ede3b15df64ba/transformed/ui-test-manifest-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/30c32b94f5c8fe181c8caa42218d86d2/transformed/core-1.5.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/338d0d842ef2c00a2e499b13763235f8/transformed/hilt-android-2.46.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/39dc54cb00460d0030adc2cc6cae1c32/transformed/runtime-livedata-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/3c5e22dfefd306dd100945fe84f70352/transformed/dagger-lint-aar-2.46.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/3d9fde51de40a1b3ad509f84fb4be540/transformed/tracing-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/3dd91701906f7d4c19f2c5d13d6b57d6/transformed/junit-1.1.5-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/468b59b060e573f7a7bd6e8d4e9dcb94/transformed/material-ripple-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/4b7af4da092c4165e10b766fccdf54f2/transformed/lifecycle-viewmodel-compose-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/4bef7b08864fb52c02b5d1815a61d301/transformed/core-ktx-1.8.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/4d0277c777e69c736e879a253b126169/transformed/hilt-navigation-compose-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/4e5a38aa08f61bdb455a10c9f242d3b0/transformed/lifecycle-livedata-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/50976974f881b8b553cc95d33c21cced/transformed/loader-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/50d555718cdea12758d0b2a895472f9e/transformed/customview-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/59604a940624773ed155f33e28de0663/transformed/ui-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/5a8beb16c7eccc11bacace68520fecb9/transformed/savedstate-ktx-1.2.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/5db0f91146a00d3949bc9bb9efa6be18/transformed/animation-core-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/62b0ec0f0a071b981b54cad8c5693da4/transformed/navigation-common-ktx-2.5.3-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/64f2a7bdcb0435ce9efd2fc2e1d5df3a/transformed/material-icons-core-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/71fe7d70fc2e9cc48e7a1d6d61b2109a/transformed/material3-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/7a78583d06f8f1292372fc0109f2847e/transformed/viewpager-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/7b40a4ffec8744398eb081322a562de1/transformed/navigation-runtime-ktx-2.5.3-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/7d81f976c2abdb8f68c7a0e9aa20abfd/transformed/ui-test-junit4-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/8cc6956d941bacd303901f2f4a358682/transformed/ui-tooling-data-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/9314f19d2f4e055b32586743b8fd045e/transformed/ui-tooling-preview-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/95f6813ed24336ba834e69b088d21934/transformed/ui-graphics-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/994fa376b9cb0847f8428eacc5c22502/transformed/core-1.8.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/995a149fc42a0e771ce98aec72b21623/transformed/runtime-saveable-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/a4b521dd3cd7ab131d1fd55140093d4b/transformed/annotation-experimental-1.1.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/a5d29f797e83b1925dcd7511382992ab/transformed/espresso-idling-resource-3.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/a8c497733a202df3aaef1275ea8d8ec3/transformed/lifecycle-viewmodel-savedstate-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/ab44e44edeab6d61431b63e6687d00aa/transformed/hilt-navigation-1.0.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/ab9774f33ea4e893b835ebcc2dbe2f2b/transformed/lifecycle-viewmodel-ktx-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/af8a1dd6492fbaf696215e349725b839/transformed/espresso-core-3.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/b7a582d26be8fba204098dd86610ffb3/transformed/savedstate-1.2.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/bb02f8a489d8a359cb63784a83ee387f/transformed/navigation-runtime-2.5.3-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/bea58c34df3810acc76ab66e931800c5/transformed/ui-unit-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/bfaa19606be7e35410d5537d7f7576d7/transformed/core-runtime-2.2.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/c5800719606ae824ee2f45910de8a6c6/transformed/ui-text-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/d3d69582996d1a7ea1a260da08b7a829/transformed/runner-1.5.2-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/d3e1076caa5df215fd1211c4dee9ee2f/transformed/ui-test-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/df0da1dc9ae54f30a401744b9276bbeb/transformed/lifecycle-runtime-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/e4678320064a27b8a51d088c389718b3/transformed/lifecycle-livedata-core-ktx-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/e502743a6e044e9c6ce1697fd7ab786c/transformed/runtime-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/e589b8602c7f185eecf775e80c77bb07/transformed/animation-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/ea51db02a235c44194afc925150251f1/transformed/lifecycle-livedata-ktx-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/ee937ac65a05486f8ac1912f48dc565f/transformed/navigation-common-2.5.3-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/f35d315a1fb7a8489dec0fc91cedfc39/transformed/activity-compose-1.5.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/f47a06fad3d7927dc41dbf0150ffc011/transformed/ui-geometry-1.3.0-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/f6b01ecc5782aa5784e2d95dc233fb8a/transformed/lifecycle-runtime-ktx-2.6.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/.gradle/caches/transforms-3/fe43905b1ec2d86015d6c7d150b0b028/transformed/versionedparcelable-1.1.1-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/AppData/Local/Android/Sdk/build-tools/30.0.3/core-lambda-stubs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sarik/AppData/Local/Android/Sdk/platforms/android-33/android.jar"/>
+	<classpathentry kind="lib" path="."/>
+</classpath>

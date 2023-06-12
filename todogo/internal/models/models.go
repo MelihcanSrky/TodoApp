@@ -41,3 +41,43 @@ func NewUser(username string, password string) (*User, error) {
 		Password: string(cryptoPassword[:]),
 	}, nil
 }
+
+type CreateTodo struct {
+	Useruuid   string `json:"user_uuid"`
+	Title      string `json:"title"`
+	Detail     string `json:"detail"`
+	Category   string `json:"category"`
+	Priority   int    `json:"priority"`
+	WeekOfYear int    `json:"week_of_year"`
+	DayOfYear  int    `json:"day_of_week"`
+	AssignedAt string `json:"assigned_at"`
+}
+
+type TodoItem struct {
+	Uuid       string `json:"uuid"`
+	UserUuid   string `json:"user_uuid"`
+	Title      string `json:"title"`
+	Detail     string `json:"detail"`
+	IsChecked  bool   `json:"is_checked"`
+	Category   string `json:"category"`
+	Priority   int    `json:"priority"`
+	WeekOfYear int    `json:"week_of_year"`
+	DayOfYear  int    `json:"day_of_week"`
+	AssignedAt string `json:"assigned_at"`
+}
+
+func NewTodo(todo *CreateTodo) (*TodoItem, error) {
+	uuid := uuid.NewString()
+	return &TodoItem{
+		Uuid:       uuid,
+		UserUuid:   todo.Useruuid,
+		Title:      todo.Title,
+		Detail:     todo.Detail,
+		IsChecked:  false,
+		Category:   todo.Category,
+		Priority:   todo.Priority,
+		WeekOfYear: todo.WeekOfYear,
+		DayOfYear:  todo.DayOfYear,
+		AssignedAt: todo.AssignedAt,
+	}, nil
+}
