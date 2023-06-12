@@ -46,10 +46,11 @@ type CreateTodo struct {
 	Useruuid   string `json:"user_uuid"`
 	Title      string `json:"title"`
 	Detail     string `json:"detail"`
-	LastAt     int    `json:"last_at"`
 	Category   string `json:"category"`
 	Priority   int    `json:"priority"`
-	AssignedAt int    `json:"assigned_at"`
+	WeekOfYear int    `json:"week_of_year"`
+	DayOfYear  int    `json:"day_of_week"`
+	AssignedAt string `json:"assigned_at"`
 }
 
 type TodoItem struct {
@@ -57,11 +58,12 @@ type TodoItem struct {
 	UserUuid   string `json:"user_uuid"`
 	Title      string `json:"title"`
 	Detail     string `json:"detail"`
-	LastAt     int    `json:"last_at"`
 	IsChecked  bool   `json:"is_checked"`
 	Category   string `json:"category"`
 	Priority   int    `json:"priority"`
-	AssignedAt int    `json:"assigned_at"`
+	WeekOfYear int    `json:"week_of_year"`
+	DayOfYear  int    `json:"day_of_week"`
+	AssignedAt string `json:"assigned_at"`
 }
 
 func NewTodo(todo *CreateTodo) (*TodoItem, error) {
@@ -71,10 +73,11 @@ func NewTodo(todo *CreateTodo) (*TodoItem, error) {
 		UserUuid:   todo.Useruuid,
 		Title:      todo.Title,
 		Detail:     todo.Detail,
-		LastAt:     todo.LastAt,
 		IsChecked:  false,
 		Category:   todo.Category,
 		Priority:   todo.Priority,
+		WeekOfYear: todo.WeekOfYear,
+		DayOfYear:  todo.DayOfYear,
 		AssignedAt: todo.AssignedAt,
 	}, nil
 }
