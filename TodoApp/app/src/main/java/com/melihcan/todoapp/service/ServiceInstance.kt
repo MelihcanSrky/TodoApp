@@ -23,6 +23,5 @@ interface ServiceInstance {
         @Header("X-jwt-Token") token: String,
         @Path("username") username: String,
         @Path("useruuid") useruuid: String,
-
     ) : Response<List<TodosModel>>
 }
