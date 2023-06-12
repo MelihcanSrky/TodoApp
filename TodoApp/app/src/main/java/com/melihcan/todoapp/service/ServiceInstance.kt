@@ -1,5 +1,6 @@
 package com.melihcan.todoapp.service
 
+import com.melihcan.todoapp.model.GetUserModel
 import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
 import com.melihcan.todoapp.model.RegisterResponseModel
@@ -17,6 +18,12 @@ interface ServiceInstance {
     suspend fun registerUser(
         @Body body: LoginRequestModel
     ) : Response<RegisterResponseModel>
+
+    @GET("user/{username}")
+    suspend fun getUserByUsername(
+        @Header("X-jwt-Token") token: String,
+        @Path("username") username: String
+    ) : Response<GetUserModel>
 
     @GET("todos/{username}/{useruuid}")
     suspend fun getTodos(

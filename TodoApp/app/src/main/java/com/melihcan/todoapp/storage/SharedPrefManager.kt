@@ -27,6 +27,15 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
             )
         }
 
+    val user: GetUserModel
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return GetUserModel(
+                shredPref.getString("useruuid", null).toString(),
+                shredPref.getString("username", null).toString()
+            )
+        }
+
     fun saveToken(data: LoginResponseModel) {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
@@ -35,10 +44,19 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
         editor.apply()
     }
 
+    fun saveUser(data: GetUserModel) {
+        val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        editor.putString("useruuid", data.uuid)
+        editor.putString("username", data.username)
+        editor.apply()
+    }
+
     fun clear() {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.clear()
+        editor.clear().commit()
         editor.apply()
     }
 }
