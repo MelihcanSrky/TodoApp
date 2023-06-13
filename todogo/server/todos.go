@@ -45,3 +45,20 @@ func (s *ApiServer) HandleGetTodos(w http.ResponseWriter, r *http.Request) error
 
 	return WriteJSON(w, http.StatusOK, todos)
 }
+
+func (s *ApiServer) HandleUpdateTodo(w http.ResponseWriter, r *http.Request) error {
+	if r.Method != "PUT" {
+		return fmt.Errorf("Method not Allowed")
+	}
+	uuid := mux.Vars(r)["uuid"]
+	req := new(models.UpdateTodo)
+	if err := json.NewDecoder(r.Body).Decode(req); err != nil {
+		return err
+	}
+
+	if err := s.backend.UpdateTodoPostgres(req.Value, uuid); err != nil {
+		return nil
+	}
+
+	return WriteJSON(w, http.StatusOK, req)
+}

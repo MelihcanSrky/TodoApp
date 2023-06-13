@@ -16,9 +16,13 @@ type User struct {
 	Password string `json:"password"`
 }
 
+type UpdateTodo struct {
+	Value bool `json:"value"`
+}
+
 type LoginRequest struct {
 	Username string `json:"username"`
-	Password string `json:"password`
+	Password string `json:"password"`
 }
 
 type LoginResponse struct {
