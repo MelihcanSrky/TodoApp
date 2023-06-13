@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.week
+import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 
 @Composable
@@ -23,6 +24,7 @@ fun TodoList(
     currentDay: Int,
     firstDayOfWeek: Int,
     currentMonth: String,
+    viewModel: HomePageViewModel,
     todos: List<TodosModel>
 ) {
     LazyColumn(
@@ -50,7 +52,7 @@ fun TodoList(
             }
             if (currentTodos.isNotEmpty()) {
                 items(currentTodos) { todo ->
-                    ListTile(todo = todo)
+                    ListTile(viewModel, todo = todo)
                 }
             } else {
                 item {

@@ -6,6 +6,7 @@ import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
 import com.melihcan.todoapp.model.RegisterResponseModel
 import com.melihcan.todoapp.model.TodosModel
+import com.melihcan.todoapp.model.UpdateTodoModel
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -40,4 +41,12 @@ interface ServiceInstance {
         @Path("useruuid") useruuid: String,
         @Body body: CreateTodoModel
     ) : Response<TodosModel>
+
+    @PUT("todos/update/{username}/{uuid}")
+    suspend fun updateTodo(
+        @Header("X-jwt-Token") token: String,
+        @Path("username") username: String,
+        @Path("uuid") uuid: String,
+        @Body body: UpdateTodoModel
+    ) : Response<UpdateTodoModel>
 }
