@@ -8,6 +8,13 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
+
+fun getCurrentDate(): String {
+    val calendar = Calendar.getInstance()
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+    val currentDate = dateFormat.format(calendar.time)
+    return currentDate
+}
 fun getCurrentWeekOfYear(): Int {
     val cal = Calendar.getInstance()
     return cal.get(Calendar.WEEK_OF_YEAR)

@@ -1,6 +1,7 @@
 package com.melihcan.todoapp.service.repository
 
 import android.content.Context
+import com.melihcan.todoapp.model.CreateTodoModel
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.service.ServiceInstance
 import com.melihcan.todoapp.storage.SharedPrefManager
@@ -24,7 +25,32 @@ class TodosRepository @Inject constructor(
                 serviceInstance.getTodos(token = token, username = username, useruuid = useruuid)
             if (response.isSuccessful) {
                 val res = response.body()
-                res?.let { onSuccess(it)}
+                res?.let { onSuccess(it) }
+            } else {
+                onFailure()
+            }
+        } catch (e: Exception) {
+            onFailure()
+        }
+    }
+
+    suspend fun createTodo(
+        body: CreateTodoModel,
+        onSuccess: (Int) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        var editBody = body
+        editBody.useruuid = useruuid
+        try {
+            val response = serviceInstance.createTodo(
+                token = token,
+                username = username,
+                useruuid = useruuid,
+                body = editBody
+            )
+            if (response.isSuccessful) {
+                val res = response.code()
+                onSuccess(res)
             } else {
                 onFailure()
             }
