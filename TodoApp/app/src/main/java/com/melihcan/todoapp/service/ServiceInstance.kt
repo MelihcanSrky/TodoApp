@@ -1,5 +1,6 @@
 package com.melihcan.todoapp.service
 
+import com.melihcan.todoapp.model.CreateTodoModel
 import com.melihcan.todoapp.model.GetUserModel
 import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
@@ -31,4 +32,12 @@ interface ServiceInstance {
         @Path("username") username: String,
         @Path("useruuid") useruuid: String,
     ) : Response<List<TodosModel>>
+
+    @POST("todos/{username}/{useruuid}")
+    suspend fun createTodo(
+        @Header("X-jwt-Token") token: String,
+        @Path("username") username: String,
+        @Path("useruuid") useruuid: String,
+        @Body body: CreateTodoModel
+    ) : Response<TodosModel>
 }

@@ -1,7 +1,5 @@
 package com.melihcan.todoapp.presentation.features.main
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,52 +7,64 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.extensions.getFirstDayOfWeek
-import com.melihcan.todoapp.model.TodosModel
-import com.melihcan.todoapp.model.week
-import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
 import com.melihcan.todoapp.presentation.features.main.components.TodoList
 import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.TodoTypo
+import com.melihcan.todoapp.utils.IsSuccess
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +73,14 @@ fun HomePage(
     navController: NavController
 ) {
     val state = viewModel.state.value
+    val focusRequester = remember {FocusRequester( )}
+    val scope = rememberCoroutineScope()
+    val bottomSheetState = rememberBottomSheetScaffoldState(
+        bottomSheetState = SheetState(
+            skipPartiallyExpanded = true,
+            initialValue = SheetValue.Hidden,
+        )
+    )
 
     val currentDay = getCurrentDayOfWeek()
     val currentWeek = getCurrentWeekOfYear()
@@ -76,58 +94,87 @@ fun HomePage(
             }
         }
     }
-
-    Scaffold(
-        topBar = {
-            TabBar(
-                currentDay,
-                firstDayOfWeek,
-                viewModel
-            )
-        },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier.shadow(
-                    4.dp,
-                    RectangleShape,
-                    clip = true,
-                    ambientColor = MaterialTheme.colorScheme.surface,
-                    spotColor = MaterialTheme.colorScheme.surface
-                ),
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Outlined.Settings, contentDescription = "Settings")
-                    }
-                },
-                floatingActionButton = {
-                    FloatingActionButton(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onBackground,
-                        shape = RoundedCornerShape(14.dp),
-                        onClick = {}) {
-                            Icon(imageVector = Icons.Default.Add, contentDescription = "FAB")
-                    }
-                }
-            )
+    LaunchedEffect(bottomSheetState.bottomSheetState) {
+        if (bottomSheetState.bottomSheetState.currentValue == SheetValue.Expanded) {
+            focusRequester.requestFocus()
         }
-    ) { padding ->
-        Column(
-            modifier = Modifier.padding(padding)
-        ) {
-            if (state.isSuccess == IsSuccess.SUCCESS) {
-                TodoList(
-                    currentDay = currentDay,
-                    firstDayOfWeek = firstDayOfWeek,
-                    currentMonth,
-                    todos = state.todos
+    }
+
+    BottomSheetScaffold(
+        sheetSwipeEnabled = true,
+        scaffoldState = bottomSheetState,
+        sheetContainerColor = MaterialTheme.colorScheme.background,
+        sheetContentColor = MaterialTheme.colorScheme.onSecondary,
+        sheetTonalElevation = 4.dp,
+        sheetShadowElevation = 4.dp,
+        sheetDragHandle = {
+
+        },
+        sheetContent = {
+            SheetContent(focusRequester = focusRequester)
+        }
+    ) {
+        Scaffold(
+            topBar = {
+                TabBar(
+                    currentDay,
+                    firstDayOfWeek,
+                    viewModel
                 )
-            } else {
-                buildBox(isSuccess = state.isSuccess)
+            },
+            bottomBar = {
+                BottomAppBar(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.shadow(
+                        4.dp,
+                        RectangleShape,
+                        clip = true,
+                        ambientColor = MaterialTheme.colorScheme.surface,
+                        spotColor = MaterialTheme.colorScheme.surface
+                    ),
+                    actions = {
+                        IconButton(onClick = {}) {
+                            Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                        }
+                        IconButton(onClick = {
+                        }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Settings,
+                                contentDescription = "Settings"
+                            )
+                        }
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onBackground,
+                            shape = RoundedCornerShape(14.dp),
+                            onClick = {
+                                scope.launch { bottomSheetState.bottomSheetState.expand() }
+                                focusRequester.requestFocus()
+                            }) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = "FAB")
+                        }
+                    }
+                )
+            }
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+            ) {
+                if (state.isSuccess == IsSuccess.SUCCESS) {
+                    TodoList(
+                        currentDay = currentDay,
+                        firstDayOfWeek = firstDayOfWeek,
+                        currentMonth,
+                        todos = state.todos
+                    )
+                } else {
+                    buildBox(isSuccess = state.isSuccess)
+                }
             }
         }
     }
@@ -151,6 +198,82 @@ fun buildBox(
                 style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )
+    }
+}
+
+@Composable
+fun SheetContent(
+    focusRequester: FocusRequester
+) {
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        TextField(
+            value = "",
+            onValueChange = {},
+            textStyle = TodoTypo.bodyMedium.copy(color = MaterialTheme.colorScheme.surface),
+            placeholder = {
+                Text(text = " Write your task", style = TodoTypo.bodyMedium, color = MaterialTheme.colorScheme.onSecondary)
+            },
+            modifier = Modifier
+                .padding(0.dp)
+                .focusRequester(focusRequester),
+            singleLine = true,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color.Transparent,
+                focusedContainerColor = Color.Transparent,
+                cursorColor = MaterialTheme.colorScheme.surface,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+
+            )
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        containerColor = MaterialTheme.colorScheme.onBackground
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 0.dp
+                    ),
+                    shape = RoundedCornerShape(10.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
+                    onClick = { }) {
+                    Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "Calendar")
+                    Text(text = "Today", style = TodoTypo.bodyMedium.copy(fontSize = 12.sp))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        containerColor = MaterialTheme.colorScheme.onBackground
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 0.dp
+                    ),
+                    shape = RoundedCornerShape(10.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
+                    onClick = { }) {
+                    Icon(imageVector = Icons.Outlined.List, contentDescription = "Calendar")
+                    Text(text = "No List", style = TodoTypo.bodyMedium.copy(fontSize = 12.sp))
+                }
+            }
+            FilledIconButton(
+                colors = IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.background,
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                shape = RoundedCornerShape(10.dp),
+                onClick = { }) {
+                Icon(imageVector = Icons.Outlined.Add, contentDescription = "Send")
+            }
+        }
     }
 }
 
