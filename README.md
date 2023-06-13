@@ -5,6 +5,9 @@
 * * Create / Login / Get User is done.
 * * create / .. Todo is done.
 
+#### Design from Figma
+https://www.figma.com/community/file/1233771767232378502
+
 ### Future Ideas
 * More features in backend
 * Electron.js desktop app / Web App
