@@ -182,6 +182,7 @@ fun HomePage(
                         currentDay = currentDay,
                         firstDayOfWeek = firstDayOfWeek,
                         currentMonth,
+                        viewModel,
                         todos = state.todos
                     )
                 } else {

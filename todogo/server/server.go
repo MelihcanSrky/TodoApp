@@ -28,6 +28,7 @@ func (s *ApiServer) Run() {
 	router.HandleFunc("/api/user/login", makeHttpHandleFunc(s.HandleLoginUser))
 	router.HandleFunc("/api/user/{username}", AuthWithJWT(makeHttpHandleFunc(s.HandleGetUserByUserName), s.backend))
 	router.HandleFunc("/api/todos/{username}/{useruuid}", AuthWithJWT(makeHttpHandleFunc(s.HandleTodos), s.backend))
+	router.HandleFunc("/api/todos/update/{username}/{uuid}", AuthWithJWT(makeHttpHandleFunc(s.HandleUpdateTodo), s.backend))
 	log.Println("TodoApp server is running now on port: ", s.listenAddr)
 
 	http.ListenAndServe(s.listenAddr, router)

@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.melihcan.todoapp.model.TodosModel
+import com.melihcan.todoapp.presentation.features.main.HomePageAction
+import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 
 @Composable
-fun ListTile(todo: TodosModel) {
+fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +50,9 @@ fun ListTile(todo: TodosModel) {
                         .size(24.dp)
                         .background(Color.Transparent),
                     checked = todo.isChecked,
-                    onCheckedChange = {},
+                    onCheckedChange = {
+                        viewModel.dispatch(HomePageAction.UpdateTodo(!todo.isChecked, todo.uuid))
+                    },
                     colors = CheckboxDefaults.colors(
                         uncheckedColor = Color.Transparent,
                         checkedColor = Color.Transparent,

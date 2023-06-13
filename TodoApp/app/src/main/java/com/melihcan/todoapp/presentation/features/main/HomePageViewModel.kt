@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.melihcan.todoapp.extensions.getCurrentDate
 import com.melihcan.todoapp.model.CreateTodoModel
 import com.melihcan.todoapp.model.TodosModel
+import com.melihcan.todoapp.model.UpdateTodoModel
 import com.melihcan.todoapp.presentation.core.BaseViewModel
 import com.melihcan.todoapp.presentation.core.ViewAction
 import com.melihcan.todoapp.presentation.core.ViewEffect
@@ -21,6 +22,7 @@ import javax.inject.Inject
 
 sealed class HomePageAction : ViewAction {
     data class CreateTodo(val weekOfYear: Int, val dayOfWeek: Int) : HomePageAction()
+    data class UpdateTodo(val value: Boolean, val uuid: String) : HomePageAction()
     object GetTodos : HomePageAction()
     object Logout : HomePageAction()
 }
@@ -101,6 +103,28 @@ class HomePageViewModel @Inject constructor(
         }
     }
 
+    private fun updateTodo(
+        value: Boolean,
+        uuid: String
+    ) {
+        viewModelScope.launch {
+            try {
+                todosRepository.updateTodo(
+                    body = UpdateTodoModel(value = value),
+                    uuid = uuid,
+                    onSuccess = {
+                        getTodos()
+                    },
+                    onFailure = {
+
+                    }
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun logout(): Boolean {
         SharedPrefManager.getInstance(context).clear()
         commit(state.value.copy(isLogin = false))
@@ -112,6 +136,7 @@ class HomePageViewModel @Inject constructor(
             is HomePageAction.GetTodos -> getTodos()
             is HomePageAction.Logout -> logout()
             is HomePageAction.CreateTodo -> createTodo(action.weekOfYear, action.dayOfWeek)
+            is HomePageAction.UpdateTodo -> updateTodo(action.value, action.uuid)
             else -> {}
         }
     }
