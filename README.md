@@ -4,9 +4,6 @@
 * Todogo - Golang Backend server for TodoApp's
 * * Create / Login / Get User is done.
 * * create / .. Todo is done.
-------------------------------------
-* TodoApp - Android Kotlin project (process in kotlin branch)
-* * Login / Register Pages are done.
 
 ### Future Ideas
 * More features in backend
@@ -14,7 +11,11 @@
 * ----
 
 ### Completed Things!
-This App Works on dev branch for now.
+This App Works on dev branch for now. (0.2.0 release is main)
+
+* TodoApp - Android Kotlin project (process in kotlin branch)
+* * Login / Register Pages are done.
+* * Home Page is done.
 
 In todogo folder: 
 ```powershell
@@ -35,5 +36,7 @@ private const val BASE_URL = "http://<your-ip>:5000/api/"
 <img src="https://github.com/MelihcanSrky/TodoApp/assets/62643822/9c0e1409-62b2-4087-9909-400f3798be2c" width=25% height=25%>
 <img src="https://github.com/MelihcanSrky/TodoApp/assets/62643822/21cce221-c0cc-41ac-882c-e73f748d2147" width=25% height=25%>
 
-### Home Page
-<img src="https://github.com/MelihcanSrky/TodoApp/assets/62643822/71d8bac3-dcd9-4cc0-a4a1-d94b19a28644" width=25% height=25%>
+### Home Page / Add Todo
+<img src="https://github.com/MelihcanSrky/TodoApp/assets/62643822/e36b31d7-61d8-45ea-8457-a51ebb370688" width=25% height=25%>
+<img src="https://github.com/MelihcanSrky/TodoApp/assets/62643822/a9cc760c-6c3b-428a-acf2-37e2f9d29e39" width=25% height=25%>
+
