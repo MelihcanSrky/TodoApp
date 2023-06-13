@@ -17,11 +17,20 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,7 +38,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -41,6 +52,7 @@ import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.week
 import com.melihcan.todoapp.utils.IsSuccess
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
+import com.melihcan.todoapp.presentation.features.main.components.TodoList
 import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 
@@ -72,146 +84,75 @@ fun HomePage(
                 firstDayOfWeek,
                 viewModel
             )
+        },
+        bottomBar = {
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.shadow(
+                    4.dp,
+                    RectangleShape,
+                    clip = true,
+                    ambientColor = MaterialTheme.colorScheme.surface,
+                    spotColor = MaterialTheme.colorScheme.surface
+                ),
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Outlined.Settings, contentDescription = "Settings")
+                    }
+                },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onBackground,
+                        shape = RoundedCornerShape(14.dp),
+                        onClick = {}) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = "FAB")
+                    }
+                }
+            )
         }
     ) { padding ->
         Column(
             modifier = Modifier.padding(padding)
         ) {
             if (state.isSuccess == IsSuccess.SUCCESS) {
-                buildTodoList(
+                TodoList(
                     currentDay = currentDay,
                     firstDayOfWeek = firstDayOfWeek,
                     currentMonth,
                     todos = state.todos
                 )
-            } else if (state.isSuccess == IsSuccess.LOADING) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
             } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Add Now!",
-                        style = TodoTypo.headlineLarge,
-                        color = MaterialTheme.colorScheme.surface
-                    )
-                }
+                buildBox(isSuccess = state.isSuccess)
             }
         }
     }
 }
 
 @Composable
-fun buildListTile(todo: TodosModel) {
-    Row(
+fun buildBox(
+    isSuccess: IsSuccess
+) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .fillMaxHeight(),
+        contentAlignment = Alignment.Center
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 12.dp)
-                    .background(MaterialTheme.colorScheme.onBackground)
-                    .border(0.dp, Color.Transparent, RoundedCornerShape(6.dp))
-            ) {
-                Checkbox(
-                    modifier = Modifier
-                        .padding(0.dp)
-                        .size(24.dp)
-                        .background(Color.Transparent),
-                    checked = todo.isChecked,
-                    onCheckedChange = {},
-                    colors = CheckboxDefaults.colors(
-                        uncheckedColor = Color.Transparent,
-                        checkedColor = Color.Transparent,
-                        checkmarkColor = MaterialTheme.colorScheme.primary
-                    )
-                )
-            }
+        if (isSuccess == IsSuccess.LOADING)
+            CircularProgressIndicator()
+        else
             Text(
-                text = todo.title,
-                style = TodoTypo.bodyMedium,
+                text = "Add Now!",
+                style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )
-        }
-        Text(
-            text = todo.category,
-            style = TodoTypo.bodySmall,
-            color = MaterialTheme.colorScheme.onSecondary
-        )
     }
-    Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
 }
 
-@Composable
-fun buildTodoList(
-    currentDay: Int,
-    firstDayOfWeek: Int,
-    currentMonth: String,
-    todos: List<TodosModel>
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 20.dp)
-    ) {
-        for (i in currentDay..6) {
-            val currentTodos =
-                todos.filter { it.dayOfWeek == i }
-            item {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = (
-                            if (i == currentDay) "Today - "
-                            else if (i - 1 == currentDay) "Tomorrow - "
-                            else {
-                                currentMonth + " " + (firstDayOfWeek + 2 +
-                                        (i - currentDay)).toString() + " - "
-                            }
-                            ) + week[currentDay + (i - currentDay)],
-                    style = TodoTypo.bodySmall,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-                Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
-            }
-            if (currentTodos.isNotEmpty()) {
-                items(currentTodos) { todo ->
-                    buildListTile(todo = todo)
-                }
-            } else {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(64.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = week[currentDay + (i - currentDay)] + " is Empty!",
-                            style = TodoTypo.bodyMedium,
-                            color = MaterialTheme.colorScheme.surface
-                        )
-                    }
-                }
-            }
-            item {
-                Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
-            }
-        }
-    }
-}
+
+
