@@ -1,5 +1,7 @@
 package com.melihcan.todoapp.presentation.features.main
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +41,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -65,6 +69,7 @@ import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 import com.melihcan.todoapp.utils.IsSuccess
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,13 +78,10 @@ fun HomePage(
     navController: NavController
 ) {
     val state = viewModel.state.value
-    val focusRequester = remember {FocusRequester( )}
+    val focusRequester = remember { FocusRequester() }
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberBottomSheetScaffoldState(
-        bottomSheetState = SheetState(
-            skipPartiallyExpanded = true,
-            initialValue = SheetValue.Hidden,
-        )
+        bottomSheetState = rememberStandardBottomSheetState(skipHiddenState = false)
     )
 
     val currentDay = getCurrentDayOfWeek()
@@ -93,25 +95,35 @@ fun HomePage(
                 popUpTo(Screen.Register.route)
             }
         }
+        if (state.isTodoAdded == true) {
+            bottomSheetState.bottomSheetState.hide()
+            focusRequester.freeFocus()
+            viewModel.commit(state.copy(isTodoAdded = false))
+        }
     }
-    LaunchedEffect(bottomSheetState.bottomSheetState) {
+    LaunchedEffect(bottomSheetState.bottomSheetState.currentValue) {
         if (bottomSheetState.bottomSheetState.currentValue == SheetValue.Expanded) {
             focusRequester.requestFocus()
+        } else {
+            focusRequester.freeFocus()
         }
     }
 
     BottomSheetScaffold(
         sheetSwipeEnabled = true,
         scaffoldState = bottomSheetState,
-        sheetContainerColor = MaterialTheme.colorScheme.background,
+        sheetContainerColor = MaterialTheme.colorScheme.onBackground,
         sheetContentColor = MaterialTheme.colorScheme.onSecondary,
         sheetTonalElevation = 4.dp,
         sheetShadowElevation = 4.dp,
-        sheetDragHandle = {
-
-        },
+        sheetPeekHeight = 0.dp,
         sheetContent = {
-            SheetContent(focusRequester = focusRequester)
+            SheetContent(
+                focusRequester = focusRequester,
+                viewModel = viewModel,
+                weekOfYear = currentWeek,
+                dayOfWeek = currentDay
+            )
         }
     ) {
         Scaffold(
@@ -192,6 +204,12 @@ fun buildBox(
     ) {
         if (isSuccess == IsSuccess.LOADING)
             CircularProgressIndicator()
+        else if (isSuccess == IsSuccess.ERROR)
+            Text(
+                text = "Somethings Wrong!",
+                style = TodoTypo.headlineLarge,
+                color = MaterialTheme.colorScheme.surface
+            )
         else
             Text(
                 text = "Add Now!",
@@ -203,17 +221,30 @@ fun buildBox(
 
 @Composable
 fun SheetContent(
-    focusRequester: FocusRequester
+    focusRequester: FocusRequester,
+    viewModel: HomePageViewModel,
+    weekOfYear: Int,
+    dayOfWeek: Int
 ) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
         TextField(
-            value = "",
-            onValueChange = {},
+            value = viewModel.state.value.title.toString(),
+            onValueChange = { value ->
+                viewModel.commit(
+                    viewModel.state.value.copy(
+                        title = value.toString()
+                    )
+                )
+            },
             textStyle = TodoTypo.bodyMedium.copy(color = MaterialTheme.colorScheme.surface),
             placeholder = {
-                Text(text = " Write your task", style = TodoTypo.bodyMedium, color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    text = " Write your task",
+                    style = TodoTypo.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
             },
             modifier = Modifier
                 .padding(0.dp)
@@ -237,7 +268,7 @@ fun SheetContent(
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         contentColor = MaterialTheme.colorScheme.onSecondary,
-                        containerColor = MaterialTheme.colorScheme.onBackground
+                        containerColor = MaterialTheme.colorScheme.background
                     ),
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 0.dp
@@ -252,7 +283,7 @@ fun SheetContent(
                 Button(
                     colors = ButtonDefaults.buttonColors(
                         contentColor = MaterialTheme.colorScheme.onSecondary,
-                        containerColor = MaterialTheme.colorScheme.onBackground
+                        containerColor = MaterialTheme.colorScheme.background
                     ),
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 0.dp
@@ -270,7 +301,9 @@ fun SheetContent(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),
                 shape = RoundedCornerShape(10.dp),
-                onClick = { }) {
+                onClick = {
+                    viewModel.dispatch(HomePageAction.CreateTodo(weekOfYear, dayOfWeek))
+                }) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = "Send")
             }
         }
