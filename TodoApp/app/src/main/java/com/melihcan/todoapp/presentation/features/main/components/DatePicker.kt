@@ -5,6 +5,7 @@ import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerFormatter
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -22,11 +23,17 @@ fun CustomDatePicker(
 ) {
     val datePickerState = rememberDatePickerState()
     DatePickerDialog(
+        colors = DatePickerDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.background,
+            navigationContentColor = MaterialTheme.colorScheme.primary
+        ),
         onDismissRequest = {
             viewModel.commit(viewModel.state.value.copy(dateDialog = false))
         },
         confirmButton = {
-            TextButton(onClick = {
+            TextButton(
+                enabled = (datePickerState.selectedDateMillis != null),
+                onClick = {
                 viewModel.commit(viewModel.state.value.copy(
                     weekOfYear = getSelectedWeekOfYear(datePickerState.selectedDateMillis!!),
                     dayOfWeek = getSelectedDayOfYear(datePickerState.selectedDateMillis!!),
@@ -36,7 +43,23 @@ fun CustomDatePicker(
             }) {
                 Text(text = "Confirm")
             }
-        }) {
-        DatePicker(state = datePickerState)
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                viewModel.commit(viewModel.state.value.copy(
+                    dateDialog = false
+                ))
+            }) {
+                Text(text = "Cancel")
+            }
+        }
+    ) {
+        DatePicker(
+            colors = DatePickerDefaults.colors(
+                weekdayContentColor = MaterialTheme.colorScheme.onSecondary,
+                dayContentColor = MaterialTheme.colorScheme.onSecondary
+            ),
+            state = datePickerState
+        )
     }
 }
