@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitClient {
 
-    private const val BASE_URL = "http://192.168.1.87:5000/api/"
+    private const val BASE_URL = "http://192.168.137.1:5000/api/"
 
     @Singleton
     @Provides

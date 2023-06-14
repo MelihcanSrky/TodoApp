@@ -3,6 +3,8 @@ package com.melihcan.todoapp.presentation.features.main
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.melihcan.todoapp.extensions.getCurrentDate
+import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
+import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.model.CreateTodoModel
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.UpdateTodoModel
@@ -21,7 +23,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 sealed class HomePageAction : ViewAction {
-    data class CreateTodo(val weekOfYear: Int, val dayOfWeek: Int) : HomePageAction()
+    object CreateTodo : HomePageAction()
     data class UpdateTodo(val value: Boolean, val uuid: String) : HomePageAction()
     object GetTodos : HomePageAction()
     object Logout : HomePageAction()
@@ -38,7 +40,7 @@ class HomePageViewModel @Inject constructor(
 ) {
 
     init {
-        getTodos()
+        getTodos(true)
     }
 
     data class State(
@@ -48,18 +50,22 @@ class HomePageViewModel @Inject constructor(
         val isTodoAdded: Boolean = false,
         val title: String = "",
         val currentDate: String = getCurrentDate(),
+        val dateDialog: Boolean = false,
+        val weekOfYear: Int = getCurrentWeekOfYear(),
+        val dayOfWeek: Int = getCurrentDayOfWeek(),
+        val selectedDate: String = "Today",
     ) : ViewState
 
-    private fun getTodos() {
+    private fun getTodos(isInit: Boolean) {
         viewModelScope.launch {
             try {
-                commit(state.value.copy(isSuccess = IsSuccess.LOADING))
+                if(isInit) commit(state.value.copy(isSuccess = IsSuccess.LOADING))
                 todosRepository.getTodos(
                     onSuccess = { list ->
                         commit(state.value.copy(isSuccess = IsSuccess.SUCCESS, todos = list))
                     },
                     onFailure = {
-                        commit(
+                        if(isInit) commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.ERROR
                             )
@@ -67,15 +73,15 @@ class HomePageViewModel @Inject constructor(
                     }
                 )
             } catch (e: Exception) {
-                commit(state.value.copy(isSuccess = IsSuccess.ERROR))
+                if(isInit) commit(state.value.copy(isSuccess = IsSuccess.ERROR))
                 e.printStackTrace()
             }
         }
     }
 
     private fun createTodo(
-        weekOfYear: Int,
-        dayOfWeek: Int
+        weekOfYear: Int = state.value.weekOfYear,
+        dayOfWeek: Int = state.value.dayOfWeek
     ) {
         viewModelScope.launch {
             try {
@@ -90,7 +96,7 @@ class HomePageViewModel @Inject constructor(
                     ),
                     onSuccess = {
                         commit(state.value.copy(isSuccess = IsSuccess.SUCCESS, isTodoAdded = true))
-                        getTodos()
+                        getTodos(false)
                     },
                     onFailure = {
                         commit(state.value.copy(isSuccess = IsSuccess.ERROR))
@@ -113,7 +119,7 @@ class HomePageViewModel @Inject constructor(
                     body = UpdateTodoModel(value = value),
                     uuid = uuid,
                     onSuccess = {
-                        getTodos()
+                        getTodos(false)
                     },
                     onFailure = {
 
@@ -133,9 +139,9 @@ class HomePageViewModel @Inject constructor(
 
     override fun dispatch(action: HomePageAction) {
         when (action) {
-            is HomePageAction.GetTodos -> getTodos()
+            is HomePageAction.GetTodos -> getTodos(false)
             is HomePageAction.Logout -> logout()
-            is HomePageAction.CreateTodo -> createTodo(action.weekOfYear, action.dayOfWeek)
+            is HomePageAction.CreateTodo -> createTodo()
             is HomePageAction.UpdateTodo -> updateTodo(action.value, action.uuid)
             else -> {}
         }

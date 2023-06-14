@@ -27,6 +27,8 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FloatingActionButton
@@ -41,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
@@ -63,6 +66,7 @@ import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.extensions.getFirstDayOfWeek
+import com.melihcan.todoapp.presentation.features.main.components.CustomDatePicker
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
 import com.melihcan.todoapp.presentation.features.main.components.TodoList
 import com.melihcan.todoapp.presentation.navigation.Screen
@@ -188,6 +192,9 @@ fun HomePage(
                 } else {
                     buildBox(isSuccess = state.isSuccess)
                 }
+                if (state.dateDialog == true) {
+                    CustomDatePicker(viewModel = viewModel)
+                }
             }
         }
     }
@@ -276,9 +283,14 @@ fun SheetContent(
                     ),
                     shape = RoundedCornerShape(10.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
-                    onClick = { }) {
+                    onClick = {
+                        viewModel.commit(viewModel.state.value.copy(dateDialog = true))
+                    }) {
                     Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "Calendar")
-                    Text(text = "Today", style = TodoTypo.bodyMedium.copy(fontSize = 12.sp))
+                    Text(
+                        text = viewModel.state.value.selectedDate,
+                        style = TodoTypo.bodyMedium.copy(fontSize = 12.sp)
+                    )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
@@ -303,7 +315,7 @@ fun SheetContent(
                 ),
                 shape = RoundedCornerShape(10.dp),
                 onClick = {
-                    viewModel.dispatch(HomePageAction.CreateTodo(weekOfYear, dayOfWeek))
+                    viewModel.dispatch(HomePageAction.CreateTodo)
                 }) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = "Send")
             }
