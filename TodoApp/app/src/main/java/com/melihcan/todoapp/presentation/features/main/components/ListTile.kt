@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.presentation.features.main.HomePageAction
@@ -62,7 +63,9 @@ fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
             }
             Text(
                 text = todo.title,
-                style = TodoTypo.bodyMedium,
+                style = TodoTypo.bodyMedium.copy(
+                    textDecoration = if (todo.isChecked) TextDecoration.LineThrough else TextDecoration.None
+                ),
                 color = MaterialTheme.colorScheme.surface
             )
         }
