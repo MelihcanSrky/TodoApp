@@ -35,6 +35,9 @@ fun TodoList(
         for (i in currentDay..6) {
             val currentTodos =
                 todos.filter { it.dayOfWeek == i && it.weekOfYear == getCurrentWeekOfYear() }
+            if (currentTodos.isEmpty()) {
+                continue
+            }
             item {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(

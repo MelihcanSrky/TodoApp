@@ -24,7 +24,11 @@ fun getCurrentWeekOfYear(): Int {
 fun getSelectedWeekOfYear(selectedDate: Long): Int {
     val cal = Calendar.getInstance()
     cal.timeInMillis = selectedDate
+    val day = cal.get(Calendar.DAY_OF_WEEK)
     val weekOfYear = cal.get(Calendar.WEEK_OF_YEAR)
+    if (day == Calendar.SUNDAY) {
+        return weekOfYear - 1
+    }
     return weekOfYear
 }
 
