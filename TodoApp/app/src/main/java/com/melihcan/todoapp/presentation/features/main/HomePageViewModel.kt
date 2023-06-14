@@ -38,7 +38,7 @@ class HomePageViewModel @Inject constructor(
 ) {
 
     init {
-        getTodos()
+        getTodos(true)
     }
 
     data class State(
@@ -50,16 +50,16 @@ class HomePageViewModel @Inject constructor(
         val currentDate: String = getCurrentDate(),
     ) : ViewState
 
-    private fun getTodos() {
+    private fun getTodos(isInit: Boolean) {
         viewModelScope.launch {
             try {
-                commit(state.value.copy(isSuccess = IsSuccess.LOADING))
+                if(isInit) commit(state.value.copy(isSuccess = IsSuccess.LOADING))
                 todosRepository.getTodos(
                     onSuccess = { list ->
                         commit(state.value.copy(isSuccess = IsSuccess.SUCCESS, todos = list))
                     },
                     onFailure = {
-                        commit(
+                        if(isInit) commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.ERROR
                             )
@@ -67,7 +67,7 @@ class HomePageViewModel @Inject constructor(
                     }
                 )
             } catch (e: Exception) {
-                commit(state.value.copy(isSuccess = IsSuccess.ERROR))
+                if(isInit) commit(state.value.copy(isSuccess = IsSuccess.ERROR))
                 e.printStackTrace()
             }
         }
@@ -90,7 +90,7 @@ class HomePageViewModel @Inject constructor(
                     ),
                     onSuccess = {
                         commit(state.value.copy(isSuccess = IsSuccess.SUCCESS, isTodoAdded = true))
-                        getTodos()
+                        getTodos(false)
                     },
                     onFailure = {
                         commit(state.value.copy(isSuccess = IsSuccess.ERROR))
@@ -113,7 +113,7 @@ class HomePageViewModel @Inject constructor(
                     body = UpdateTodoModel(value = value),
                     uuid = uuid,
                     onSuccess = {
-                        getTodos()
+                        getTodos(false)
                     },
                     onFailure = {
 
@@ -133,7 +133,7 @@ class HomePageViewModel @Inject constructor(
 
     override fun dispatch(action: HomePageAction) {
         when (action) {
-            is HomePageAction.GetTodos -> getTodos()
+            is HomePageAction.GetTodos -> getTodos(false)
             is HomePageAction.Logout -> logout()
             is HomePageAction.CreateTodo -> createTodo(action.weekOfYear, action.dayOfWeek)
             is HomePageAction.UpdateTodo -> updateTodo(action.value, action.uuid)
