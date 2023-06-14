@@ -3,6 +3,8 @@ package com.melihcan.todoapp.presentation.features.main
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.melihcan.todoapp.extensions.getCurrentDate
+import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
+import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.model.CreateTodoModel
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.UpdateTodoModel
@@ -21,7 +23,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 sealed class HomePageAction : ViewAction {
-    data class CreateTodo(val weekOfYear: Int, val dayOfWeek: Int) : HomePageAction()
+    object CreateTodo : HomePageAction()
     data class UpdateTodo(val value: Boolean, val uuid: String) : HomePageAction()
     object GetTodos : HomePageAction()
     object Logout : HomePageAction()
@@ -48,6 +50,10 @@ class HomePageViewModel @Inject constructor(
         val isTodoAdded: Boolean = false,
         val title: String = "",
         val currentDate: String = getCurrentDate(),
+        val dateDialog: Boolean = false,
+        val weekOfYear: Int = getCurrentWeekOfYear(),
+        val dayOfWeek: Int = getCurrentDayOfWeek(),
+        val selectedDate: String = "Today",
     ) : ViewState
 
     private fun getTodos(isInit: Boolean) {
@@ -74,8 +80,8 @@ class HomePageViewModel @Inject constructor(
     }
 
     private fun createTodo(
-        weekOfYear: Int,
-        dayOfWeek: Int
+        weekOfYear: Int = state.value.weekOfYear,
+        dayOfWeek: Int = state.value.dayOfWeek
     ) {
         viewModelScope.launch {
             try {
@@ -135,7 +141,7 @@ class HomePageViewModel @Inject constructor(
         when (action) {
             is HomePageAction.GetTodos -> getTodos(false)
             is HomePageAction.Logout -> logout()
-            is HomePageAction.CreateTodo -> createTodo(action.weekOfYear, action.dayOfWeek)
+            is HomePageAction.CreateTodo -> createTodo()
             is HomePageAction.UpdateTodo -> updateTodo(action.value, action.uuid)
             else -> {}
         }

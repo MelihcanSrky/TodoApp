@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.week
 import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
@@ -33,7 +34,7 @@ fun TodoList(
     ) {
         for (i in currentDay..6) {
             val currentTodos =
-                todos.filter { it.dayOfWeek == i }
+                todos.filter { it.dayOfWeek == i && it.weekOfYear == getCurrentWeekOfYear() }
             item {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
