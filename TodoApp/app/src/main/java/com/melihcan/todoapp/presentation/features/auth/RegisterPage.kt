@@ -85,7 +85,8 @@ fun RegisterPage(
                     viewModel.dispatch(RegisterAction.UpdatePassword(it))
                 },
                 isError = if (state.password == "") false else !state.password.isPasswordValid(),
-                label = "Password"
+                label = "Password",
+                isPassword = true
             )
             Spacer(modifier = Modifier.height(8.dp))
             TodoTextField(
@@ -94,7 +95,8 @@ fun RegisterPage(
                     viewModel.dispatch(RegisterAction.UpdateConfirmPassword(it))
                 },
                 isError = if (state.confirmPassword == "") false else state.password != state.confirmPassword,
-                label = "Confirm Password"
+                label = "Confirm Password",
+                isPassword = true
             )
             Box(
                 modifier = Modifier.fillMaxWidth(),

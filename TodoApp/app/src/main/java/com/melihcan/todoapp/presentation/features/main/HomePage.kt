@@ -124,9 +124,7 @@ fun HomePage(
         sheetContent = {
             SheetContent(
                 focusRequester = focusRequester,
-                viewModel = viewModel,
-                weekOfYear = currentWeek,
-                dayOfWeek = currentDay
+                viewModel = viewModel
             )
         }
     ) {
@@ -231,8 +229,6 @@ fun buildBox(
 fun SheetContent(
     focusRequester: FocusRequester,
     viewModel: HomePageViewModel,
-    weekOfYear: Int,
-    dayOfWeek: Int
 ) {
     Column(
         modifier = Modifier.padding(16.dp)

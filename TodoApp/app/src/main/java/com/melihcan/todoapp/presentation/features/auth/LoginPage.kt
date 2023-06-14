@@ -90,7 +90,8 @@ fun LoginPage(
                         viewModel.dispatch(LoginAction.UpdatePassword(it))
                     },
                     isError = if (state.password == "") false else !state.password.isPasswordValid(),
-                    label = "Password"
+                    label = "Password",
+                    isPassword = true
                 )
                 Box(
                     modifier = Modifier
