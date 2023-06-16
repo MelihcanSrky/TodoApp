@@ -59,11 +59,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
@@ -230,13 +232,13 @@ fun buildBox(
             CircularProgressIndicator()
         else if (isSuccess == IsSuccess.ERROR)
             Text(
-                text = "Somethings Wrong!",
+                text = stringResource(id = R.string.someThingIsWrong),
                 style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )
         else
             Text(
-                text = "Add Now!",
+                text = stringResource(id = R.string.addNow),
                 style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )

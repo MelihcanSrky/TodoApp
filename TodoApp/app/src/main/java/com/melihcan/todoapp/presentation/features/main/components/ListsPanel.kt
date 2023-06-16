@@ -35,7 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.model.ListModel
@@ -70,7 +72,7 @@ fun ListsPanel(
         item {
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Lists",
+                text = stringResource(id = R.string.lists),
                 style = TodoTypo.bodySmall,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -80,12 +82,18 @@ fun ListsPanel(
         items(categoryList) { list ->
             ListItem(
                 listItem = list,
-                taskCount = currentTodos.filter { it.category == list.id && it.dayOfWeek >= getCurrentDayOfWeek() }.size.toString() + " tasks"
+                taskCount = currentTodos.filter { it.category == list.id && it.dayOfWeek >= getCurrentDayOfWeek() }.size.toString() + " " + stringResource(
+                    id = R.string.tasks
+                )
             )
         }
 
         item {
-            ListItem(taskCount = currentTodos.filter { it.category == "00000" && it.dayOfWeek >= getCurrentDayOfWeek() }.size.toString() + " tasks")
+            ListItem(
+                taskCount = currentTodos.filter { it.category == "00000" && it.dayOfWeek >= getCurrentDayOfWeek() }.size.toString() + " " + stringResource(
+                    id = R.string.tasks
+                )
+            )
         }
 
         if (listNameEdit == false)
@@ -113,7 +121,7 @@ fun ListsPanel(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "New list",
+                            text = stringResource(id = R.string.new_list),
                             style = TodoTypo.bodyMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -136,7 +144,7 @@ fun ListsPanel(
                         textStyle = TodoTypo.bodyMedium.copy(color = MaterialTheme.colorScheme.surface),
                         placeholder = {
                             Text(
-                                text = " Give List a Name",
+                                text = " " + stringResource(id = R.string.give_list_a_name),
                                 style = TodoTypo.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSecondary
                             )
@@ -198,13 +206,13 @@ fun ListItem(
         ) {
             Icon(
                 imageVector = Icons.Outlined.List,
-                contentDescription = listItem?.id ?: "No List",
+                contentDescription = listItem?.id ?: stringResource(id = R.string.no_list),
                 tint = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.size(16.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = listItem?.name ?: "No List",
+                text = listItem?.name ?: stringResource(id = R.string.no_list),
                 style = TodoTypo.bodyMedium,
                 color = MaterialTheme.colorScheme.surface
             )

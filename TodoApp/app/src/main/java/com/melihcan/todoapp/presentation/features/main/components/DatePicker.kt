@@ -11,6 +11,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.res.stringResource
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.getSelectedDate
 import com.melihcan.todoapp.extensions.getSelectedDayOfYear
 import com.melihcan.todoapp.extensions.getSelectedWeekOfYear
@@ -41,7 +43,7 @@ fun CustomDatePicker(
                     dateDialog = false
                 ))
             }) {
-                Text(text = "Confirm")
+                Text(text = stringResource(id = R.string.confirm))
             }
         },
         dismissButton = {
@@ -50,7 +52,7 @@ fun CustomDatePicker(
                     dateDialog = false
                 ))
             }) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel))
             }
         }
     ) {

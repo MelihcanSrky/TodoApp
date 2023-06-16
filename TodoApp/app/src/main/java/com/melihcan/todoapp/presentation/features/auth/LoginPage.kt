@@ -24,9 +24,11 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.isPasswordValid
 import com.melihcan.todoapp.extensions.isUsernameValid
 import com.melihcan.todoapp.presentation.features.auth.components.TodoTextField
@@ -42,7 +44,6 @@ fun LoginPage(
     navController: NavController
 ) {
     val state = viewModel.state.value
-
     LaunchedEffect(state) {
         if (state.isSuccess == IsSuccess.SUCCESS) {
             navController.navigate(Screen.Home.route)
@@ -70,7 +71,7 @@ fun LoginPage(
             ) {
                 Spacer(modifier = Modifier.height(96.dp))
                 Text(
-                    text = "Login",
+                    text = stringResource(id = R.string.login),
                     style = TodoTypo.headlineLarge,
                     color = MaterialTheme.colorScheme.surface
                 )
@@ -81,7 +82,7 @@ fun LoginPage(
                         viewModel.dispatch(LoginAction.UpdateUsername(it))
                     },
                     isError = if (state.username == "") false else !state.username.isUsernameValid(),
-                    label = "Username"
+                    label = stringResource(id = R.string.username)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TodoTextField(
@@ -90,7 +91,7 @@ fun LoginPage(
                         viewModel.dispatch(LoginAction.UpdatePassword(it))
                     },
                     isError = if (state.password == "") false else !state.password.isPasswordValid(),
-                    label = "Password",
+                    label = stringResource(id = R.string.password),
                     isPassword = true
                 )
                 Box(
@@ -109,7 +110,7 @@ fun LoginPage(
                     ) {
                         if (state.isSuccess == IsSuccess.ERROR)
                             Text(
-                                text = "Somethings is wrong!",
+                                text = stringResource(id = R.string.someThingIsWrong),
                                 style = TodoTypo.bodyMedium,
                                 color = MaterialTheme.colorScheme.error
                             )
@@ -119,7 +120,7 @@ fun LoginPage(
                             contentPadding = PaddingValues(4.dp),
                             onClick = {}) {
                             Text(
-                                text = "Forgot Password",
+                                text = stringResource(id = R.string.forgot_password),
                                 style = TodoTypo.bodyMedium,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -149,14 +150,14 @@ fun LoginPage(
                             color = MaterialTheme.colorScheme.surface
                         )
                     else
-                        Text(text = "Login", style = TodoTypo.bodyMedium)
+                        Text(text = stringResource(id = R.string.login), style = TodoTypo.bodyMedium)
                 }
             }
             TextButton(onClick = {
                 navController.navigate(Screen.Register.route)
             }) {
                 Text(
-                    text = "Sign Up Now",
+                    text = stringResource(id = R.string.sign_up_now),
                     style = TodoTypo.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

@@ -39,8 +39,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.presentation.features.main.HomePageAction
 import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.features.main.SheetPanel
@@ -73,7 +75,7 @@ fun CreateTaskPanel(
             textStyle = TodoTypo.bodyMedium.copy(color = MaterialTheme.colorScheme.surface),
             placeholder = {
                 Text(
-                    text = " Write your task",
+                    text = " " + stringResource(id = R.string.write_your_task),
                     style = TodoTypo.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondary
                 )
@@ -126,7 +128,7 @@ fun CreateTaskPanel(
                     CustomIconButton(
                         icon = Icons.Outlined.List,
                         text = categoryList.find { it.id == viewModel.state.value.category }?.name
-                            ?: "No List",
+                            ?: stringResource(id = R.string.no_list),
                         onClick = { expanded = true })
                 }
             }

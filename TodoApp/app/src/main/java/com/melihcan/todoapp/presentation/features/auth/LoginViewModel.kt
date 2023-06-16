@@ -79,7 +79,6 @@ class LoginViewModel @Inject constructor(
                         SharedPrefManager.getInstance(context).saveToken(LoginResponseModel(token))
                         getUserByUsername()
                     }, onFailure = {
-                        println("Is Failure loginUser")
                         commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.ERROR,
@@ -88,7 +87,6 @@ class LoginViewModel @Inject constructor(
                         )
                     })
             } catch (e: Exception) {
-                println("Is Failure loginUser Exception")
                 commit(state.value.copy(isSuccess = IsSuccess.ERROR, isButtonEnabled = true))
                 e.printStackTrace()
             }
@@ -103,7 +101,6 @@ class LoginViewModel @Inject constructor(
                     state.value.username,
                     token = state.value.token!!,
                     onSuccess = { user ->
-                        println("Is Success getUser")
                         commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.SUCCESS,
@@ -116,7 +113,6 @@ class LoginViewModel @Inject constructor(
                         ))
                     },
                     onFailure = {
-                        println("Is Failure getUser")
                         commit(
                             state.value.copy(
                                 isSuccess = IsSuccess.ERROR,
@@ -126,7 +122,6 @@ class LoginViewModel @Inject constructor(
                     }
                 )
             } catch (e: Exception) {
-                println("Is Failure getUsert exception")
                 commit(state.value.copy(isSuccess = IsSuccess.ERROR, isButtonEnabled = true))
                 e.printStackTrace()
             }
