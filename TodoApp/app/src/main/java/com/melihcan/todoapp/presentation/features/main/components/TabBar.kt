@@ -57,7 +57,7 @@ fun TabBar(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Good Morning", style = TodoTypo.headlineSmall)
+                    Text(text = "Welcome Back!", style = TodoTypo.headlineSmall)
                     IconButton(onClick = {
                         val isLogOut = viewModel.dispatch(HomePageAction.Logout)
                     }) {

@@ -76,7 +76,17 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
     fun clear() {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.clear().commit()
+
+        val lists = sharedPref.all.filterKeys { it != "useruuid" && it != "username" }
+
+        editor.clear()
+
+        for ((key, value) in lists) {
+            if (value is String) {
+                editor.putString(key, value)
+            }
+        }
+
         editor.apply()
     }
 }
