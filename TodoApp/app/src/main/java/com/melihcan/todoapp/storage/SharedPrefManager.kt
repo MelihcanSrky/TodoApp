@@ -1,7 +1,10 @@
 package com.melihcan.todoapp.storage
 
 import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.melihcan.todoapp.model.GetUserModel
+import com.melihcan.todoapp.model.ListModel
 import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
 
@@ -36,6 +39,15 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
             )
         }
 
+    val lists: List<ListModel>
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val json = shredPref.getString("lists", null)
+            val type = object : TypeToken<List<ListModel>>() {}.type
+
+            return Gson().fromJson(json, type) ?: emptyList()
+        }
+
     fun saveToken(data: LoginResponseModel) {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
@@ -50,6 +62,15 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
 
         editor.putString("useruuid", data.uuid)
         editor.putString("username", data.username)
+        editor.apply()
+    }
+
+    fun saveList(data: List<ListModel>) {
+        val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = shredPref.edit()
+        val json = Gson().toJson(data)
+
+        editor.putString("lists", json)
         editor.apply()
     }
 

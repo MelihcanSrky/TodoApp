@@ -10,7 +10,7 @@ data class CreateTodoModel(
     @SerializedName("detail")
     val detail: String = "EmptyForNow",
     @SerializedName("category")
-    val category: String = "No List",
+    val category: String,
     @SerializedName("priority")
     val priority: Int = 1,
     @SerializedName("week_of_year")

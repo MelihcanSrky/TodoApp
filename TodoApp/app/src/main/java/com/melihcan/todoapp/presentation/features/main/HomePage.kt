@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -29,6 +30,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FloatingActionButton
@@ -66,12 +68,16 @@ import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.extensions.getFirstDayOfWeek
+import com.melihcan.todoapp.model.week
+import com.melihcan.todoapp.presentation.features.main.components.CreateTaskPanel
 import com.melihcan.todoapp.presentation.features.main.components.CustomDatePicker
+import com.melihcan.todoapp.presentation.features.main.components.ListsPanel
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
 import com.melihcan.todoapp.presentation.features.main.components.TodoList
 import com.melihcan.todoapp.presentation.navigation.Screen
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 import com.melihcan.todoapp.utils.IsSuccess
+import dagger.Lazy
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 
@@ -100,16 +106,22 @@ fun HomePage(
             }
         }
         if (state.isTodoAdded == true) {
-            bottomSheetState.bottomSheetState.hide()
-            focusRequester.freeFocus()
+            scope.launch { bottomSheetState.bottomSheetState.hide() }
             viewModel.commit(state.copy(isTodoAdded = false))
+        }
+        if (state.sheetPanel == SheetPanel.NONE) {
+            if (bottomSheetState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                scope.launch { bottomSheetState.bottomSheetState.hide() }
+            }
         }
     }
     LaunchedEffect(bottomSheetState.bottomSheetState.currentValue) {
-        if (bottomSheetState.bottomSheetState.currentValue == SheetValue.Expanded) {
-            focusRequester.requestFocus()
-        } else {
-            focusRequester.freeFocus()
+        if (state.sheetPanel == SheetPanel.CREATE_TASK) {
+            if (bottomSheetState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                focusRequester.requestFocus()
+            } else {
+                focusRequester.freeFocus()
+            }
         }
     }
 
@@ -122,10 +134,13 @@ fun HomePage(
         sheetShadowElevation = 4.dp,
         sheetPeekHeight = 0.dp,
         sheetContent = {
-            SheetContent(
-                focusRequester = focusRequester,
-                viewModel = viewModel
-            )
+            if (state.sheetPanel == SheetPanel.CREATE_TASK)
+                CreateTaskPanel(
+                    focusRequester = focusRequester,
+                    viewModel = viewModel
+                )
+            else if (state.sheetPanel == SheetPanel.LISTS)
+                ListsPanel(viewModel)
         }
     ) {
         Scaffold(
@@ -148,7 +163,10 @@ fun HomePage(
                         spotColor = MaterialTheme.colorScheme.surface
                     ),
                     actions = {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {
+                            viewModel.commit(state.copy(sheetPanel = SheetPanel.LISTS))
+                            scope.launch { bottomSheetState.bottomSheetState.expand() }
+                        }) {
                             Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
                         }
                         IconButton(onClick = {
@@ -165,8 +183,8 @@ fun HomePage(
                             contentColor = MaterialTheme.colorScheme.onBackground,
                             shape = RoundedCornerShape(14.dp),
                             onClick = {
+                                viewModel.commit(state.copy(sheetPanel = SheetPanel.CREATE_TASK))
                                 scope.launch { bottomSheetState.bottomSheetState.expand() }
-                                focusRequester.requestFocus()
                             }) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = "FAB")
                         }
@@ -222,100 +240,6 @@ fun buildBox(
                 style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )
-    }
-}
-
-@Composable
-fun SheetContent(
-    focusRequester: FocusRequester,
-    viewModel: HomePageViewModel,
-) {
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        TextField(
-            value = viewModel.state.value.title.toString(),
-            onValueChange = { value ->
-                viewModel.commit(
-                    viewModel.state.value.copy(
-                        title = value.toString()
-                    )
-                )
-            },
-            textStyle = TodoTypo.bodyMedium.copy(color = MaterialTheme.colorScheme.surface),
-            placeholder = {
-                Text(
-                    text = " Write your task",
-                    style = TodoTypo.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            },
-            modifier = Modifier
-                .padding(0.dp)
-                .focusRequester(focusRequester),
-            singleLine = true,
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                cursorColor = MaterialTheme.colorScheme.surface,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-
-            )
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = MaterialTheme.colorScheme.onSecondary,
-                        containerColor = MaterialTheme.colorScheme.background
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 0.dp
-                    ),
-                    shape = RoundedCornerShape(10.dp),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
-                    onClick = {
-                        viewModel.commit(viewModel.state.value.copy(dateDialog = true))
-                    }) {
-                    Icon(imageVector = Icons.Outlined.DateRange, contentDescription = "Calendar")
-                    Text(
-                        text = viewModel.state.value.selectedDate,
-                        style = TodoTypo.bodyMedium.copy(fontSize = 12.sp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = MaterialTheme.colorScheme.onSecondary,
-                        containerColor = MaterialTheme.colorScheme.background
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 0.dp
-                    ),
-                    shape = RoundedCornerShape(10.dp),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
-                    onClick = { }) {
-                    Icon(imageVector = Icons.Outlined.List, contentDescription = "Calendar")
-                    Text(text = "No List", style = TodoTypo.bodyMedium.copy(fontSize = 12.sp))
-                }
-            }
-            FilledIconButton(
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = MaterialTheme.colorScheme.background,
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                shape = RoundedCornerShape(10.dp),
-                onClick = {
-                    viewModel.dispatch(HomePageAction.CreateTodo)
-                }) {
-                Icon(imageVector = Icons.Outlined.Add, contentDescription = "Send")
-            }
-        }
     }
 }
 
