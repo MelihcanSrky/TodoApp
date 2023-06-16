@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -58,16 +60,17 @@ type CreateTodo struct {
 }
 
 type TodoItem struct {
-	Uuid       string `json:"uuid"`
-	UserUuid   string `json:"user_uuid"`
-	Title      string `json:"title"`
-	Detail     string `json:"detail"`
-	IsChecked  bool   `json:"is_checked"`
-	Category   string `json:"category"`
-	Priority   int    `json:"priority"`
-	WeekOfYear int    `json:"week_of_year"`
-	DayOfYear  int    `json:"day_of_week"`
-	AssignedAt string `json:"assigned_at"`
+	Uuid       string    `json:"uuid"`
+	UserUuid   string    `json:"user_uuid"`
+	Title      string    `json:"title"`
+	Detail     string    `json:"detail"`
+	IsChecked  bool      `json:"is_checked"`
+	Category   string    `json:"category"`
+	Priority   int       `json:"priority"`
+	WeekOfYear int       `json:"week_of_year"`
+	DayOfYear  int       `json:"day_of_week"`
+	AssignedAt string    `json:"assigned_at"`
+	CreatedAt  time.Time `json:"created_at"`
 }
 
 func NewTodo(todo *CreateTodo) (*TodoItem, error) {

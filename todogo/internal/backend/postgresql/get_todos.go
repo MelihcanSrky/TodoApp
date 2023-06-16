@@ -7,7 +7,7 @@ import (
 )
 
 func (s *PostgresStore) GetTodosByUserName(userUuid string) ([]*models.TodoItem, error) {
-	rows, err := s.db.Query("select * from todos where user_uuid=$1", userUuid)
+	rows, err := s.db.Query("select * from todos where user_uuid=$1 order by created_at", userUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -36,6 +36,7 @@ func scanTodos(rows *sql.Rows) (*models.TodoItem, error) {
 		&todo.WeekOfYear,
 		&todo.DayOfYear,
 		&todo.AssignedAt,
+		&todo.CreatedAt,
 	)
 	return todo, err
 }
