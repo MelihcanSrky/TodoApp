@@ -39,10 +39,9 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
             )
         }
 
-    val lists: List<ListModel>
-        get() {
+    fun getLists(key: String): List<ListModel> {
             val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-            val json = shredPref.getString("lists", null)
+            val json = shredPref.getString(key, null)
             val type = object : TypeToken<List<ListModel>>() {}.type
 
             return Gson().fromJson(json, type) ?: emptyList()
@@ -70,7 +69,7 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
         val editor = shredPref.edit()
         val json = Gson().toJson(data)
 
-        editor.putString("lists", json)
+        editor.putString(shredPref.getString("useruuid", null), json)
         editor.apply()
     }
 

@@ -57,6 +57,7 @@ fun CreateTaskPanel(
         mutableStateOf(false)
     }
     val sharedP = SharedPrefManager.getInstance(ctx)
+    val categoryList = sharedP.getLists(sharedP.user.uuid)
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -106,7 +107,7 @@ fun CreateTaskPanel(
                 Column {
                     DropdownMenu(
                         expanded = expanded, onDismissRequest = { expanded = false }) {
-                        sharedP.lists.forEachIndexed { index, item ->
+                        categoryList.forEachIndexed { index, item ->
                             DropdownMenuItem(
                                 colors = MenuDefaults.itemColors(
                                     textColor = MaterialTheme.colorScheme.background
@@ -124,7 +125,7 @@ fun CreateTaskPanel(
                     }
                     CustomIconButton(
                         icon = Icons.Outlined.List,
-                        text = sharedP.lists.find { it.id == viewModel.state.value.category }?.name
+                        text = categoryList.find { it.id == viewModel.state.value.category }?.name
                             ?: "No List",
                         onClick = { expanded = true })
                 }

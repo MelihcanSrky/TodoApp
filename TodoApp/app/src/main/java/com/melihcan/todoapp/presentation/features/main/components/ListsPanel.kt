@@ -59,6 +59,7 @@ fun ListsPanel(
     }
 
     val sharedP = SharedPrefManager.getInstance(ctx)
+    val categoryList = sharedP.getLists(sharedP.user.uuid)
 
     val currentTodos =
         viewModel.state.value.todos.filter { it.weekOfYear == getCurrentWeekOfYear() }
@@ -76,7 +77,7 @@ fun ListsPanel(
             Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
         }
 
-        items(sharedP.lists) { list ->
+        items(categoryList) { list ->
             ListItem(
                 listItem = list,
                 taskCount = currentTodos.filter { it.category == list.id && it.dayOfWeek >= getCurrentDayOfWeek() }.size.toString() + " tasks"
@@ -152,7 +153,7 @@ fun ListsPanel(
                         ),
                     )
                     IconButton(onClick = {
-                        val temp = sharedP.lists.toMutableList()
+                        val temp = categoryList.toMutableList()
                         val newList = ListModel(name = listNameValue)
                         temp.add(newList)
                         sharedP.saveList(temp)

@@ -32,7 +32,7 @@ import com.melihcan.todoapp.storage.SharedPrefManager
 fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
     val ctx = LocalContext.current
     val sharedP = SharedPrefManager.getInstance(ctx)
-    val categoryLists = sharedP.lists
+    val categoryLists = sharedP.getLists(sharedP.user.uuid)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +75,7 @@ fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
             )
         }
         Text(
-            text = if (todo.category == "00000") "No List" else (sharedP.lists.find { it.id == todo.category }?.name ?: "Not Found!"),
+            text = if (todo.category == "00000") "No List" else (categoryLists.find { it.id == todo.category }?.name ?: "Not Found!"),
             style = TodoTypo.bodySmall,
             color = MaterialTheme.colorScheme.onSecondary
         )
