@@ -2,8 +2,7 @@
  
 ## Features
 * Todogo - Golang Backend server for TodoApp's
-* * Create / Login / Get User is done.
-* * create / .. Todo is done.
+* TodoApp - Kotlin Frontend Mobile app for Android.(For now!)
 
 #### Design from Figma
 https://www.figma.com/community/file/1233771767232378502
@@ -14,7 +13,16 @@ https://www.figma.com/community/file/1233771767232378502
 * ----
 
 ### Completed Things!
-This App Works on dev branch for now. (0.2.0 release is main)
+This App Works on main branch.
+Version 1.0.0
+
+Standard to do app.
+TR / EN localize language.
+Change between dark and light themes in app. Default is system theme.
+Create categories for tasks. (If you log in from another device, the lists stored on that device are not accessible.)
+
+
+
 
 * TodoApp - Android Kotlin project (process in kotlin branch)
 * * Login / Register Pages are done.
