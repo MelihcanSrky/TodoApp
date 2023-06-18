@@ -16,9 +16,13 @@ https://www.figma.com/community/file/1233771767232378502
 This App Works on main branch.
 Version 1.0.0
 
+
 Standard to do app.
+
 TR / EN localize language.
+
 Change between dark and light themes in app. Default is system theme.
+
 Create categories for tasks. (If you log in from another device, the lists stored on that device are not accessible.)
 
 
