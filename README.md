@@ -23,14 +23,8 @@ TR / EN localize language.
 
 Change between dark and light themes in app. Default is system theme.
 
-Create categories for tasks. (If you log in from another device, the lists stored on that device are not accessible.)
+Create categories for tasks. (If you log in from another device, the lists stored on that device are not accessible.(Because lists are storing in SharedPreferences.))
 
-
-
-
-* TodoApp - Android Kotlin project (process in kotlin branch)
-* * Login / Register Pages are done.
-* * Home Page is done.
 
 In todogo folder: 
 ```powershell
