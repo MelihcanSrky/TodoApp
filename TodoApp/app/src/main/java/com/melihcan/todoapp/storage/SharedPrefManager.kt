@@ -47,6 +47,32 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
             return Gson().fromJson(json, type) ?: emptyList()
         }
 
+    var isDarkTheme: Boolean
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return shredPref.getBoolean("isDarkTheme", false)
+        }
+        set(value) {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val editor = shredPref.edit()
+
+            editor.putBoolean("isDarkTheme", value)
+            editor.apply()
+        }
+
+    var readSystemTheme: String
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return shredPref.getString("readSystemTheme", null).toString()
+        }
+        set(value) {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val editor = shredPref.edit()
+
+            editor.putString("readSystemTheme", value)
+            editor.apply()
+        }
+
     fun saveToken(data: LoginResponseModel) {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()

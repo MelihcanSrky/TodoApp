@@ -67,7 +67,7 @@ fun getCurrentDayOfWeek(): Int {
 fun getFirstDayOfWeek(week: Int): Int {
     val calendar = Calendar.getInstance()
     calendar.firstDayOfWeek = Calendar.MONDAY
-    calendar.set(Calendar.WEEK_OF_YEAR, week + 1)
+    calendar.set(Calendar.WEEK_OF_YEAR, week)
     calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
     val dateFormat = SimpleDateFormat("dd", Locale.getDefault())

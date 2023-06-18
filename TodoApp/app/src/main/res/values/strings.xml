@@ -30,5 +30,7 @@
     <string name="cancel">Cancel</string>
     <string name="addList">Add List</string>
     <string name="notFound">Not Found!</string>
+    <string name="darkTheme">Dark Theme</string>
     <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
 </resources>

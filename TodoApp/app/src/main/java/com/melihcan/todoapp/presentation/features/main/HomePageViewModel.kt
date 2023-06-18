@@ -29,7 +29,7 @@ sealed class HomePageAction : ViewAction {
     object Logout : HomePageAction()
 }
 
-enum class SheetPanel {CREATE_TASK, LISTS, NONE}
+enum class SheetPanel {CREATE_TASK, LISTS, SETTINGS, NONE}
 
 @HiltViewModel
 class HomePageViewModel @Inject constructor(

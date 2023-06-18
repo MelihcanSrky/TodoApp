@@ -31,5 +31,7 @@
     <string name="cancel">İptal</string>
     <string name="addList">Liste Ekle</string>
     <string name="notFound">Bulunamadı!</string>
+    <string name="darkTheme">Koyu Tema</string>
     <string name="logout">Çıkış Yap</string>
+    <string name="settings">Ayarlar</string>
 </resources>

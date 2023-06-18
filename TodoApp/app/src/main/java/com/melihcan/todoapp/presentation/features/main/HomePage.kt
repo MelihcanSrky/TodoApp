@@ -2,6 +2,7 @@ package com.melihcan.todoapp.presentation.features.main
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomAppBar
@@ -41,6 +44,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -59,6 +63,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -66,14 +71,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.melihcan.todoapp.R
+import com.melihcan.todoapp.extensions.SetTheme
 import com.melihcan.todoapp.extensions.getCurrentDayOfWeek
 import com.melihcan.todoapp.extensions.getCurrentMonth
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.extensions.getFirstDayOfWeek
+import com.melihcan.todoapp.model.ListModel
 import com.melihcan.todoapp.model.week
 import com.melihcan.todoapp.presentation.features.main.components.CreateTaskPanel
 import com.melihcan.todoapp.presentation.features.main.components.CustomDatePicker
 import com.melihcan.todoapp.presentation.features.main.components.ListsPanel
+import com.melihcan.todoapp.presentation.features.main.components.SettingsPanel
 import com.melihcan.todoapp.presentation.features.main.components.TabBar
 import com.melihcan.todoapp.presentation.features.main.components.TodoList
 import com.melihcan.todoapp.presentation.navigation.Screen
@@ -87,7 +95,8 @@ import java.time.DayOfWeek
 @Composable
 fun HomePage(
     viewModel: HomePageViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    setTheme: SetTheme
 ) {
     val state = viewModel.state.value
     val focusRequester = remember { FocusRequester() }
@@ -143,6 +152,8 @@ fun HomePage(
                 )
             else if (state.sheetPanel == SheetPanel.LISTS)
                 ListsPanel(viewModel)
+            else if (state.sheetPanel == SheetPanel.SETTINGS)
+                SettingsPanel(setTheme)
         }
     ) {
         Scaffold(
@@ -172,6 +183,8 @@ fun HomePage(
                             Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
                         }
                         IconButton(onClick = {
+                            viewModel.commit(state.copy(sheetPanel = SheetPanel.SETTINGS))
+                            scope.launch { bottomSheetState.bottomSheetState.expand() }
                         }) {
                             Icon(
                                 imageVector = Icons.Outlined.Settings,
@@ -208,7 +221,9 @@ fun HomePage(
                         todos = state.todos
                     )
                 } else {
-                    buildBox(isSuccess = state.isSuccess)
+                    if (state.todos.isEmpty()) {
+                        buildBox(isSuccess = state.isSuccess)
+                    }
                 }
                 if (state.dateDialog == true) {
                     CustomDatePicker(viewModel = viewModel)
@@ -244,6 +259,5 @@ fun buildBox(
             )
     }
 }
-
 
 
