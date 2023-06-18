@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.melihcan.todoapp.extensions.SetTheme
 import com.melihcan.todoapp.presentation.features.auth.LoginPage
 import com.melihcan.todoapp.presentation.features.auth.LoginViewModel
 import com.melihcan.todoapp.presentation.features.auth.RegisterPage
@@ -13,7 +14,8 @@ import com.melihcan.todoapp.storage.SharedPrefManager
 
 @Composable
 fun Navigator(
-    context: Context
+    context: Context,
+    setTheme: SetTheme
 ) {
     val navController = rememberNavController()
     val token = SharedPrefManager.getInstance(context).token.token
@@ -37,7 +39,7 @@ fun Navigator(
         }
 
         composable(Screen.Home.route) {
-            HomePage(navController = navController)
+            HomePage(navController = navController, setTheme = setTheme)
         }
     }
 }

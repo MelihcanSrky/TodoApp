@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">TodoApp</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="have_you_account">Have You Account?</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="lists">Lists</string>
+    <string name="new_list">New List</string>
+    <string name="give_list_a_name">Give List a Name</string>
+    <string name="tasks">Tasks</string>
+    <string name="write_your_task">Write your task</string>
+    <string name="no_list">No List</string>
+    <string name="someThingIsWrong">Somethings is Wrong!</string>
+    <string name="addNow">Add Now!</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="addList">Add List</string>
+    <string name="notFound">Not Found!</string>
+    <string name="darkTheme">Dark Theme</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
 </resources>

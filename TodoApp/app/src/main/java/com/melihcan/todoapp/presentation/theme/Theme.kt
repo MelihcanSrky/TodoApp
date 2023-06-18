@@ -31,9 +31,17 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xff00A86B),
+    secondary = Color(0xffD3D9D9),
+    tertiary = Pink40,
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFF000000),
+    onPrimary = Color.White,
+    onSecondary = Color(0xff7E8491),
+    onTertiary = Color.White,
+    onBackground = Color(0xFFF4F6F6),
+    onSurface = Color(0xFF1C1B1F),
+    error = Color(0xffF44725)
 )
 
 @Composable
@@ -62,7 +70,7 @@ fun TodoAppTheme(
     }
 
     MaterialTheme(
-        colorScheme = if (darkTheme) DarkColorScheme else DarkColorScheme,
+        colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
         typography = TodoTypo,
         content = content
     )

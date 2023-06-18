@@ -19,15 +19,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.presentation.features.main.HomePageAction
 import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.theme.TodoTypo
+import com.melihcan.todoapp.storage.SharedPrefManager
 
 @Composable
 fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
+    val ctx = LocalContext.current
+    val sharedP = SharedPrefManager.getInstance(ctx)
+    val categoryLists = sharedP.getLists(sharedP.user.uuid)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +77,8 @@ fun ListTile(viewModel: HomePageViewModel, todo: TodosModel) {
             )
         }
         Text(
-            text = todo.category,
+            text = if (todo.category == "00000") stringResource(id = R.string.no_list)
+            else (categoryLists.find { it.id == todo.category }?.name ?: stringResource(id = R.string.notFound)),
             style = TodoTypo.bodySmall,
             color = MaterialTheme.colorScheme.onSecondary
         )

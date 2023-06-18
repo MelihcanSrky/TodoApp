@@ -24,9 +24,11 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.isPasswordValid
 import com.melihcan.todoapp.extensions.isUsernameValid
 import com.melihcan.todoapp.presentation.features.auth.components.TodoTextField
@@ -65,7 +67,7 @@ fun RegisterPage(
         ) {
             Spacer(modifier = Modifier.height(96.dp))
             Text(
-                text = "Sign Up",
+                text = stringResource(id = R.string.sign_up),
                 style = TodoTypo.headlineLarge,
                 color = MaterialTheme.colorScheme.surface
             )
@@ -76,7 +78,7 @@ fun RegisterPage(
                     viewModel.dispatch(RegisterAction.UpdateUsername(it))
                 },
                 isError = if (state.username == "") false else !state.username.isUsernameValid(),
-                label = "Username"
+                label = stringResource(id = R.string.username)
             )
             Spacer(modifier = Modifier.height(8.dp))
             TodoTextField(
@@ -85,7 +87,8 @@ fun RegisterPage(
                     viewModel.dispatch(RegisterAction.UpdatePassword(it))
                 },
                 isError = if (state.password == "") false else !state.password.isPasswordValid(),
-                label = "Password"
+                label = stringResource(id = R.string.password),
+                isPassword = true
             )
             Spacer(modifier = Modifier.height(8.dp))
             TodoTextField(
@@ -94,7 +97,8 @@ fun RegisterPage(
                     viewModel.dispatch(RegisterAction.UpdateConfirmPassword(it))
                 },
                 isError = if (state.confirmPassword == "") false else state.password != state.confirmPassword,
-                label = "Confirm Password"
+                label = stringResource(id = R.string.confirm_password),
+                isPassword = true
             )
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -109,7 +113,7 @@ fun RegisterPage(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (state.isSuccess == IsSuccess.ERROR) Text(
-                        text = "Somethings is wrong!",
+                        text = stringResource(id = R.string.someThingIsWrong),
                         style = TodoTypo.bodyMedium,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -118,7 +122,7 @@ fun RegisterPage(
                         navController.navigate(Screen.Login.route)
                     }) {
                         Text(
-                            text = "Have You Account?",
+                            text = stringResource(id = R.string.have_you_account),
                             style = TodoTypo.bodyMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -145,7 +149,7 @@ fun RegisterPage(
                         .width(18.dp),
                     color = MaterialTheme.colorScheme.surface
                 )
-                else Text(text = "Sign Up", style = TodoTypo.bodyMedium)
+                else Text(text = stringResource(id = R.string.sign_up), style = TodoTypo.bodyMedium)
             }
         }
     }

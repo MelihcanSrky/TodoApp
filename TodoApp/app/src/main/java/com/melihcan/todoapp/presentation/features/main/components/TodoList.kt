@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.getCurrentWeekOfYear
 import com.melihcan.todoapp.model.TodosModel
 import com.melihcan.todoapp.model.week
@@ -42,13 +44,13 @@ fun TodoList(
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = (
-                            if (i == currentDay) "Today - "
-                            else if (i - 1 == currentDay) "Tomorrow - "
+                            if (i == currentDay) stringResource(id = R.string.today) + " - "
+                            else if (i - 1 == currentDay) stringResource(id = R.string.tomorrow) + " - "
                             else {
                                 currentMonth + " " + (firstDayOfWeek + 2 +
                                         (i - currentDay)).toString() + " - "
                             }
-                            ) + week[currentDay + (i - currentDay)],
+                            ) + stringResource(id = week[currentDay + (i - currentDay)]),
                     style = TodoTypo.bodySmall,
                     color = MaterialTheme.colorScheme.onSecondary
                 )
@@ -67,7 +69,7 @@ fun TodoList(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = week[currentDay + (i - currentDay)] + " is Empty!",
+                            text = stringResource(id = week[currentDay + (i - currentDay)]) + " is Empty!",
                             style = TodoTypo.bodyMedium,
                             color = MaterialTheme.colorScheme.surface
                         )

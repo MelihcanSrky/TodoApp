@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="welcome_back">Hoş Geldiniz!</string>
+    <string name="sign_up">Kaydol</string>
+    <string name="username">Kullanıcı Adı</string>
+    <string name="password">Parola</string>
+    <string name="confirm_password">Parolayı Onayla</string>
+    <string name="have_you_account">Hesabınız Var mı?</string>
+    <string name="login">Giriş Yap</string>
+    <string name="forgot_password">Parolanızı mı unuttunuz?</string>
+    <string name="sign_up_now">Hemen Kaydol</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="thursday">Perşembe</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="today">Bugün</string>
+    <string name="tomorrow">Yarın</string>
+    <string name="lists">Listeler</string>
+    <string name="new_list">Yeni Liste</string>
+    <string name="give_list_a_name">Listeye Bir İsim Verin</string>
+    <string name="tasks">Görevler</string>
+    <string name="write_your_task">Görevinizi Yazın</string>
+    <string name="no_list">Liste Yok</string>
+    <string name="someThingIsWrong">Birşeyler yanlış gitti!</string>
+    <string name="addNow">Şimdi Ekle!</string>
+    <string name="confirm">Onayla</string>
+    <string name="cancel">İptal</string>
+    <string name="addList">Liste Ekle</string>
+    <string name="notFound">Bulunamadı!</string>
+    <string name="darkTheme">Koyu Tema</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="settings">Ayarlar</string>
+</resources>

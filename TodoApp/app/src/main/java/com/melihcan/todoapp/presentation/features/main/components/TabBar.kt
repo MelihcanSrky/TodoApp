@@ -23,7 +23,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.melihcan.todoapp.R
 import com.melihcan.todoapp.model.WeekModel
 import com.melihcan.todoapp.model.week
 import com.melihcan.todoapp.presentation.features.main.HomePageAction
@@ -39,7 +41,7 @@ fun TabBar(
 ) {
     var weekDays = mutableListOf<WeekModel>()
     for (i in 0..6) {
-        weekDays.add(WeekModel(i + firstDayOfWeek, week[i]))
+        weekDays.add(WeekModel(i + firstDayOfWeek, stringResource(id = week[i])))
     }
 
     var selectedIndex by remember { mutableStateOf(currentDay) }
@@ -57,16 +59,7 @@ fun TabBar(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Good Morning", style = TodoTypo.headlineSmall)
-                    IconButton(onClick = {
-                        val isLogOut = viewModel.dispatch(HomePageAction.Logout)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Logout",
-                            tint = Color.White
-                        )
-                    }
+                    Text(text = stringResource(id = R.string.welcome_back), style = TodoTypo.headlineSmall)
                 }
             }
         )

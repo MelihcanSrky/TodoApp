@@ -1,7 +1,10 @@
 package com.melihcan.todoapp.storage
 
 import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.melihcan.todoapp.model.GetUserModel
+import com.melihcan.todoapp.model.ListModel
 import com.melihcan.todoapp.model.LoginRequestModel
 import com.melihcan.todoapp.model.LoginResponseModel
 
@@ -36,6 +39,40 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
             )
         }
 
+    fun getLists(key: String): List<ListModel> {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val json = shredPref.getString(key, null)
+            val type = object : TypeToken<List<ListModel>>() {}.type
+
+            return Gson().fromJson(json, type) ?: emptyList()
+        }
+
+    var isDarkTheme: Boolean
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return shredPref.getBoolean("isDarkTheme", false)
+        }
+        set(value) {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val editor = shredPref.edit()
+
+            editor.putBoolean("isDarkTheme", value)
+            editor.apply()
+        }
+
+    var readSystemTheme: String
+        get() {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return shredPref.getString("readSystemTheme", null).toString()
+        }
+        set(value) {
+            val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val editor = shredPref.edit()
+
+            editor.putString("readSystemTheme", value)
+            editor.apply()
+        }
+
     fun saveToken(data: LoginResponseModel) {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
@@ -53,10 +90,29 @@ class SharedPrefManager private constructor(private val sharedContext: Context){
         editor.apply()
     }
 
+    fun saveList(data: List<ListModel>) {
+        val shredPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = shredPref.edit()
+        val json = Gson().toJson(data)
+
+        editor.putString(shredPref.getString("useruuid", null), json)
+        editor.apply()
+    }
+
     fun clear() {
         val sharedPref = sharedContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.clear().commit()
+
+        val lists = sharedPref.all.filterKeys { it != "useruuid" && it != "username" }
+
+        editor.clear()
+
+        for ((key, value) in lists) {
+            if (value is String) {
+                editor.putString(key, value)
+            }
+        }
+
         editor.apply()
     }
 }

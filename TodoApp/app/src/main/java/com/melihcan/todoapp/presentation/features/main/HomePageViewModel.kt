@@ -29,6 +29,8 @@ sealed class HomePageAction : ViewAction {
     object Logout : HomePageAction()
 }
 
+enum class SheetPanel {CREATE_TASK, LISTS, SETTINGS, NONE}
+
 @HiltViewModel
 class HomePageViewModel @Inject constructor(
     private val todosRepository: TodosRepository,
@@ -49,11 +51,13 @@ class HomePageViewModel @Inject constructor(
         val isLogin: Boolean = true,
         val isTodoAdded: Boolean = false,
         val title: String = "",
+        val category: String = "00000",
         val currentDate: String = getCurrentDate(),
         val dateDialog: Boolean = false,
         val weekOfYear: Int = getCurrentWeekOfYear(),
         val dayOfWeek: Int = getCurrentDayOfWeek(),
         val selectedDate: String = "Today",
+        val sheetPanel: SheetPanel = SheetPanel.NONE,
     ) : ViewState
 
     private fun getTodos(isInit: Boolean) {
@@ -92,6 +96,7 @@ class HomePageViewModel @Inject constructor(
                         title = state.value.title.toString(),
                         weekOfYear = weekOfYear,
                         dayOfWeek = dayOfWeek,
+                        category = state.value.category,
                         assignedAt = state.value.currentDate
                     ),
                     onSuccess = {
