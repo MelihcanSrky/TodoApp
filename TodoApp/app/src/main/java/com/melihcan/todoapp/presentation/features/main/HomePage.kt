@@ -153,7 +153,7 @@ fun HomePage(
             else if (state.sheetPanel == SheetPanel.LISTS)
                 ListsPanel(viewModel)
             else if (state.sheetPanel == SheetPanel.SETTINGS)
-                SettingsPanel(setTheme)
+                SettingsPanel(viewModel, setTheme)
         }
     ) {
         Scaffold(

@@ -60,15 +60,6 @@ fun TabBar(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(text = stringResource(id = R.string.welcome_back), style = TodoTypo.headlineSmall)
-                    IconButton(onClick = {
-                        val isLogOut = viewModel.dispatch(HomePageAction.Logout)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Logout",
-                            tint = Color.White
-                        )
-                    }
                 }
             }
         )

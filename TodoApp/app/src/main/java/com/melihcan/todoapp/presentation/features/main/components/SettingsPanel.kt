@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,12 +32,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.melihcan.todoapp.R
 import com.melihcan.todoapp.extensions.SetTheme
+import com.melihcan.todoapp.presentation.features.main.HomePageAction
+import com.melihcan.todoapp.presentation.features.main.HomePageViewModel
 import com.melihcan.todoapp.presentation.theme.TodoTypo
 import com.melihcan.todoapp.storage.SharedPrefManager
 
 
 @Composable
 fun SettingsPanel(
+    viewModel: HomePageViewModel,
     setTheme: SetTheme
 ) {
     val ctx = LocalContext.current
@@ -84,7 +89,7 @@ fun SettingsPanel(
                     Text(
                         text = stringResource(id = R.string.darkTheme),
                         style = TodoTypo.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 Switch(checked = isDarkTheme, onCheckedChange = {
@@ -92,6 +97,39 @@ fun SettingsPanel(
                     setTheme.commit(setTheme.state.value.copy(isDarkTheme = isDarkTheme))
                     sharedP.isDarkTheme = !sharedP.isDarkTheme
                 })
+            }
+            Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
+        }
+
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        onClick = {
+                            viewModel.dispatch(HomePageAction.Logout)
+                        }
+                    )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.ExitToApp,
+                        contentDescription = "Logout",
+                        tint = MaterialTheme.colorScheme.onSecondary,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = stringResource(id = R.string.logout),
+                        style = TodoTypo.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
             }
             Divider(color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f))
         }
